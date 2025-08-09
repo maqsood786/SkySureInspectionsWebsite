@@ -65,11 +65,10 @@
     .nav-links { display: flex; align-items: center; gap: clamp(12px, 3vw, 28px); }
     .nav-links a { color: #fff; text-decoration: none; font-weight: 700; }
 
-    .cta-top-left button, .btn {
-      background: var(--accent); color: #fff; border: 0; border-radius: 999px;
-      padding: 10px 16px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow);
-    }
-    .btn-outline { background: transparent; border: 2px solid #fff; }
+    .cta-top-left button, .btn { background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 12px 20px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow); font-size: 16px; }
+    .btn-primary { background: var(--brand); color: #fff; }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-outline { background: transparent; border: 2px solid #fff; color:#fff; }
 
     /* compact nav on very small heights (landscape phones) */
     @media (max-height: 420px) {
@@ -113,11 +112,11 @@
 
     /* ====== Services grid ====== */
     #services { scroll-margin-top: calc(var(--nav-h) + 24px); margin-block: clamp(24px, 6vw, 64px); }
-    #services h2 { color: var(--brand); margin: 0 0 12px 0; }
+    #services h2 { color: var(--accent); margin: 0 0 12px 0; }
 
-    .service-grid { display: grid; gap: clamp(14px, 3vw, 24px); }
-    /* Auto-fit pattern: 1 col on small, then 2, then 3. Works in portrait/landscape. */
-    .service-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+    .service-grid { display: grid; gap: clamp(14px, 2vw, 24px); grid-template-columns: repeat(3, minmax(280px, 1fr)); }
+    @media (max-width: 1100px) { .service-grid { grid-template-columns: repeat(2, minmax(260px, 1fr)); } }
+    @media (max-width: 700px) { .service-grid { grid-template-columns: 1fr; } }
 
     .service-box { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow);
                    padding: clamp(16px, 2.8vw, 24px); text-align: center; }
@@ -135,7 +134,7 @@
 
     /* ====== About ====== */
     #about { margin-block: clamp(24px, 6vw, 72px); }
-    #about h2 { color: var(--brand); margin: 0 0 12px 0; }
+    #about h2 { color: var(--accent); margin: 0 0 12px 0; }
 
     /* ====== Footer ====== */
     footer {
@@ -201,7 +200,7 @@
   <!-- ====== NAVBAR ====== -->
   <div class="nav-container" role="navigation" aria-label="Primary">
     <nav class="wrap">
-      <a class="brand" href="https://skysureinspections.com/" aria-label="SkySure home">
+      <a class="brand" href="https://ahdworsky.github.io/SkySureMobile/" aria-label="SkySure home">
         <img src="Final_Logo_Transparent.png" alt="SkySure Inspections logo" loading="lazy" decoding="async" />
         <span>SkySure Inspections</span>
       </a>
@@ -221,8 +220,8 @@
         FAA Part 107 certified and insured. Clear, sky‑high views before you make your next move.
       </p>
       <div style="margin-top: 16px; display:flex; gap:12px; justify-content:center; flex-wrap: wrap;">
-        <a class="btn" href="#services">See services</a>
-        <button class="btn btn-outline" type="button" onclick="openForm()">Schedule an inspection</button>
+        <a class="btn btn-accent" href="#services">See services</a>
+        <button class="btn btn-primary" type="button" onclick="openForm()">Schedule an inspection</button>
       </div>
     </div>
   </header>
@@ -297,7 +296,7 @@
 
   <!-- ====== Floating CTA & Modal Form (accessible) ====== -->
   <div class="cta-floating">
-    <button class="btn" type="button" onclick="openForm()" aria-haspopup="dialog" aria-controls="appointment-form">Schedule an Inspection</button>
+    <button class="btn btn-primary" type="button" onclick="openForm()" aria-haspopup="dialog" aria-controls="appointment-form">Schedule an Inspection</button>
   </div>
 
   <dialog id="appointment-form" aria-labelledby="form-title">
@@ -346,7 +345,7 @@
           </div>
         </div>
         <div class="row" style="margin-top:8px;">
-          <button class="btn" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
           <button class="btn btn-outline" type="button" onclick="closeForm()">Cancel</button>
         </div>
       </form>
