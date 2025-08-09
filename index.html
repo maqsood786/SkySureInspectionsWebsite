@@ -26,25 +26,8 @@
     /* Services */
     #services{margin-block:60px;position:relative}
     #services > h2{color:var(--accent);position:absolute;top:-40px;left:0;margin:0}
-    .service-grid{
-      display:grid;
-      gap:20px;
-      grid-template-columns:repeat(3,minmax(280px,360px));
-      justify-content:center;
-    }
-    @media (max-width:1100px){
-      .service-grid{
-        grid-template-columns:repeat(2,minmax(280px,360px));
-        justify-content:center;
-      }
-    }
-    @media (max-width:700px){
-      .service-grid{
-        grid-template-columns:1fr;
-        justify-content:stretch;
-      }
-    }
-    .service-box{background:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;text-align:center}
+    .service-grid,.bottom-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;max-width:1200px;margin:0 auto}
+    .service-box{flex:1 1 280px;max-width:360px;background:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;text-align:center}
     .service-box h3{margin-top:0;color:var(--brand)}
     .service-box p{margin:8px 0}
     .price{color:var(--accent);font-weight:900}
@@ -79,34 +62,36 @@
   </header>
 
   <main>
-    <section id="services">
+    <section id="services" style="scroll-margin-top: 150px;">
       <h2>Services</h2>
       <div class="service-grid">
-        <article class="service-box">
+        <div class="service-box">
           <h3>Roof Snapshot</h3>
-          <p>High‑resolution aerial imagery for a quick overview of your roof’s condition.</p>
-          <p class="price">$125 (&lt;2,500 sq. ft.) / $175 (&gt;2,500 sq. ft.)</p>
-        </article>
-        <article class="service-box">
+          <p>High-resolution aerial imagery for a quick overview of your roof’s condition.</p>
+          <p class="price">$125 / $175</p>
+        </div>
+        <div class="service-box">
           <h3>Detailed Roof Report</h3>
-          <p>In‑depth imaging documenting wear or damage—ideal for buyers or sellers who want more detail.</p>
-          <p class="price">$150 (&lt;2,500 sq. ft.) / $200 (&gt;2,500 sq. ft.)</p>
-        </article>
-        <article class="service-box">
-          <h3>Realtor Marketing Add‑On</h3>
-          <p>Aerial photos/video to elevate listing presentations with dramatic roofline and lot context.</p>
-          <p class="price">$50 add‑on</p>
-        </article>
-        <article class="service-box">
+          <p>In-depth drone imaging documenting wear or damage—great for buyers or sellers.</p>
+          <p class="price">$150 / $200</p>
+        </div>
+        <div class="service-box">
+          <h3>Realtor Marketing Add-On</h3>
+          <p>Aerial footage to elevate your listing with dramatic views and visual clarity.</p>
+          <p class="price">$50 Add-On</p>
+        </div>
+      </div>
+      <div class="bottom-row">
+        <div class="service-box">
           <h3>Land Survey Flyover</h3>
-          <p>Visualize property lines, terrain, and access on large or undeveloped parcels.</p>
-          <p class="price">Request a quote</p>
-        </article>
-        <article class="service-box">
+          <p>Visualize property lines, terrain, and boundaries for undeveloped or large parcels.</p>
+          <p class="price">Quote Required</p>
+        </div>
+        <div class="service-box">
           <h3>Insurance Claim Documentation</h3>
-          <p>Capture clear roof damage imagery to support faster, smoother claim resolution.</p>
-          <p class="price">$150 flat rate</p>
-        </article>
+          <p>Capture detailed roof damage imagery to support faster, smoother claim resolution.</p>
+          <p class="price">$150 Flat Rate</p>
+        </div>
       </div>
     </section>
 
