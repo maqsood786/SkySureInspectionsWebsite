@@ -26,16 +26,7 @@
     /* Services */
     #services{margin-block:60px;position:relative}
     #services > h2{color:var(--accent);position:absolute;top:-40px;left:0;margin:0}
-    .service-grid{display:grid;gap:20px;grid-template-columns:repeat(3,minmax(280px,360px));justify-content:center;margin-inline:auto}
-    @media (max-width:1100px){
-      .service-grid{grid-template-columns:repeat(2,minmax(260px,360px));justify-content:center}
-      .service-grid::after{
-        content:"";
-        display:block;
-        width:min(360px,100%);
-      }
-    }
-    @media (max-width:700px){.service-grid{grid-template-columns:1fr;justify-content:stretch}}
+    .service-grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,360px));justify-content:center}
     .service-box{background:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;text-align:center}
     .service-box h3{margin-top:0;color:var(--brand)}
     .service-box p{margin:8px 0}
@@ -111,7 +102,7 @@
   </main>
 
   <footer>
-    <p>FAA Part 107 Certified | Insured | Not a home inspection – just a clear, sky‑high view of what matters most.</p>
+    <p>FAA Part 107 Certified | Insured | Not a home inspection – just a clear, sky-high view of what matters most.</p>
     <p>Email: <a href="mailto:aaron@skysure.com" style="color:#fff;">aaron@skysure.com</a></p>
     <p>Phone: <a href="tel:+17048855795" style="color:#fff;">704-885-5795</a></p>
     <p>Location: Charlotte &amp; surrounding areas</p>
