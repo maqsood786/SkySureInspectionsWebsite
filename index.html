@@ -8,7 +8,14 @@
   <style>
     :root { --brand:#0E1F2F; --accent:#EA5A1F; --ink:#1A2A3A; --bg:#fff; --shadow:0 8px 20px rgba(0,0,0,.12); --radius:16px; --nav-h:80px; }
     html { scroll-behavior:smooth; }
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:#f5f7fb url('Background.png') center/cover no-repeat;overflow-x:hidden;}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:#f5f7fb url('Background.png') center top no-repeat;
+      background-size:cover;
+      overflow-x:hidden;
+    }
 
     /* Nav */
     .nav-container{position:fixed;top:0;left:0;width:100%;height:var(--nav-h);background:var(--brand);z-index:1005;display:flex;align-items:center;justify-content:center}
@@ -20,7 +27,7 @@
     .btn{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:12px 20px;font-weight:800;cursor:pointer;box-shadow:var(--shadow)}
 
     /* Header */
-    header#top{padding-top:calc(var(--nav-h) + 80px);text-align:center}
+    header#top{padding-top:calc(var(--nav-h) + 80px);padding-bottom:160px;text-align:center}
     #main-logo{width:clamp(220px,32vw,420px);display:block;margin:0 auto}
 
     /* Services */
@@ -45,7 +52,7 @@
 <body>
   <div class="nav-container">
     <div class="nav-links">
-      <a href="https://ahdworsky.github.io/SkySureMobile/">Home</a>
+      <a href="https://ahdworsky.github.io/SkySureInspectionsWebsite/">Home</a>
       <a href="#services">Services</a>
       <a href="#about">About</a>
     </div>
@@ -58,7 +65,6 @@
   <header id="top">
     <div class="wrap" style="max-width:1200px;margin:0 auto;">
       <img id="main-logo" src="Final_Logo_Transparent.png" alt="SkySure Inspections" />
-      <p>Because What You Can’t See Can Cost You</p>
     </div>
   </header>
 
