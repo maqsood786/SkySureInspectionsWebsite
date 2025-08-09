@@ -5,409 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0E1F2F" />
   <title>SkySure Inspections</title>
-  <meta name="description" content="SkySure Inspections provides fast, high‑quality drone roof snapshots and property flyovers in the greater Charlotte area. FAA Part 107 certified and insured." />
-  <link rel="canonical" href="https://skysureinspections.com/" />
-  <meta name="robots" content="index,follow" />
-  <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="SkySure Inspections" />
-  <meta property="og:description" content="Drone roof snapshots and property flyovers — Charlotte & surrounding areas." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://skysureinspections.com/" />
-  <meta property="og:image" content="Final_Logo_Transparent.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-
   <style>
-    /* ====== Design tokens ====== */
-    :root {
-      --brand:#0E1F2F; /* deep blue */
-      --accent:#EA5A1F; /* orange */
-      --ink:#1A2A3A;   /* body text */
-      --bg: #ffffff;   /* card bg */
-      --shadow: 0 8px 20px rgba(0,0,0,.12);
-      --radius: 16px;
-      --nav-h: 64px; /* default; updated at breakpoints */
-    }
+    :root { --brand:#0E1F2F; --accent:#EA5A1F; --ink:#1A2A3A; --bg:#fff; --shadow:0 8px 20px rgba(0,0,0,.12); --radius:16px; --nav-h:80px; }
+    html { scroll-behavior:smooth; }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:#f5f7fb url('Background.png') center/cover no-repeat;overflow-x:hidden;}
 
-    html { scroll-behavior: smooth; }
-    html, body { height: 100%; }
+    /* Nav */
+    .nav-container{position:fixed;top:0;left:0;width:100%;height:var(--nav-h);background:var(--brand);z-index:1005;display:flex;align-items:center;justify-content:center}
+    .nav-links{display:flex;gap:clamp(24px,4vw,48px)}
+    .nav-links a{color:#fff;text-decoration:none;font-weight:700}
 
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--ink);
-      background: #f5f7fb;
-      /* Use a non-fixed background on mobile to avoid iOS white bars */
-      background-image: url('Background.png');
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: scroll;
-      overflow-x: hidden;
-    }
+    /* Schedule button just below nav, static */
+    .cta-top-left{position:absolute;top:var(--nav-h);left:12px;margin-top:8px}
+    .btn{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:12px 20px;font-weight:800;cursor:pointer;box-shadow:var(--shadow)}
 
-    /* ====== A11y helpers ====== */
-    .skip-link {
-      position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
-    }
-    .skip-link:focus { left: 12px; top: 12px; width: auto; height: auto; background: #fff; padding: 10px 12px; border-radius: 8px; box-shadow: var(--shadow); }
+    /* Header */
+    header#top{padding-top:calc(var(--nav-h) + 80px);text-align:center}
+    #main-logo{width:clamp(220px,32vw,420px);display:block;margin:0 auto}
 
-    /* ====== Top nav ====== */
-    .nav-container {
-      position: fixed; inset: 0 0 auto 0; height: var(--nav-h);
-      background: var(--brand);
-      z-index: 1005;
-      display: flex; align-items: center; justify-content: center;
-      padding: 0 clamp(12px, 3vw, 28px);
-    }
-    nav { width: 100%; max-width: 1200px; display: flex; align-items: center; justify-content: space-between; }
-    .brand { display: flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; font-weight: 700; letter-spacing: .3px; }
-    .brand img { height: 36px; width: auto; border-radius: 6px; aspect-ratio: auto; }
-    .nav-links { display: flex; align-items: center; gap: clamp(12px, 3vw, 28px); }
-    .nav-links a { color: #fff; text-decoration: none; font-weight: 700; }
+    /* Services */
+    #services{margin-block:60px}
+    #services h2{color:var(--accent);position:absolute;top:-40px;left:0;margin:0}
+    .service-grid{display:grid;gap:20px;grid-template-columns:repeat(3,minmax(280px,1fr));justify-content:center}
+    @media (max-width:1100px){.service-grid{grid-template-columns:repeat(2,minmax(260px,1fr));justify-content:center}}
+    .service-box{background:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;text-align:center}
 
-    .cta-top-left button, .btn { background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 12px 20px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow); font-size: 16px; }
-    .btn-primary { background: var(--brand); color: #fff; }
-    .btn-accent { background: var(--accent); color: #fff; }
-    .btn-outline { background: transparent; border: 2px solid #fff; color:#fff; }
+    /* About */
+    #about{margin-block:60px;position:relative}
+    #about h2{color:var(--accent);position:absolute;top:-40px;left:0;margin:0}
 
-    /* compact nav on very small heights (landscape phones) */
-    @media (max-height: 420px) {
-      :root { --nav-h: 56px; }
-      .brand img { height: 28px; }
-    }
-    /* default height */
-    :root { --nav-h: 72px; }
-    @media (min-width: 768px) { :root { --nav-h: 80px; } }
-
-    /* ====== Header / Hero ====== */
-    header#top {
-      position: relative; padding-top: calc(var(--nav-h) + clamp(28px, 6vw, 64px));
-      padding-bottom: clamp(24px, 5vw, 64px);
-      text-align: center;
-    }
-    #main-logo {
-      width: clamp(180px, 32vw, 340px);
-      height: auto; display: block; margin: 0 auto;
-      filter: drop-shadow(0 6px 18px rgba(0,0,0,.18));
-      transition: transform .45s ease, width .45s ease, top .45s ease, right .45s ease;
-      will-change: transform, width, top, right;
-    }
-
-    /* Fixed mini-logo when scrolled into Services */
-    .logo-fixed-small {
-      position: fixed; top: 12px; right: 12px; z-index: 1010;
-      width: clamp(120px, 18vw, 180px) !important;
-      transform: translateZ(0);
-    }
-    @media (min-width: 768px) { .logo-fixed-small { top: 14px; right: 16px; } }
-    @media (orientation: landscape) and (max-height: 480px) { .logo-fixed-small { top: 8px; right: 8px; } }
-
-    /* ====== Sections ====== */
-    main { display: block; }
-    section { position: relative; z-index: 1; }
-
-    .wrap { width: min(1200px, 92vw); margin: 0 auto; }
-    .panel { background: color-mix(in srgb, #ffffff 88%, transparent); backdrop-filter: blur(2px);
-             border-radius: var(--radius); box-shadow: var(--shadow); padding: clamp(16px, 3.2vw, 28px); }
-
-    /* ====== Services grid ====== */
-    #services { scroll-margin-top: calc(var(--nav-h) + 24px); margin-block: clamp(24px, 6vw, 64px); }
-    #services h2 { color: var(--accent); margin: 0 0 12px 0; }
-
-    .service-grid { display: grid; gap: clamp(14px, 2vw, 24px); grid-template-columns: repeat(3, minmax(280px, 1fr)); }
-    @media (max-width: 1100px) { .service-grid { grid-template-columns: repeat(2, minmax(260px, 1fr)); } }
-    @media (max-width: 700px) { .service-grid { grid-template-columns: 1fr; } }
-
-    .service-box { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow);
-                   padding: clamp(16px, 2.8vw, 24px); text-align: center; }
-    .service-box h3 { margin: 0 0 6px 0; color: var(--brand); }
-    .service-box p { margin: 6px 0; }
-    .price { color: var(--accent); font-weight: 900; letter-spacing: .2px; }
-
-    /* Achieve a 2‑3 visual at common landscape widths */
-    @media (orientation: landscape) and (min-width: 740px) and (max-width: 1100px) {
-      .service-grid { grid-template-columns: repeat(2, minmax(280px, 1fr)); }
-    }
-    @media (orientation: landscape) and (min-width: 1101px) {
-      .service-grid { grid-template-columns: repeat(3, minmax(280px, 1fr)); }
-    }
-
-    /* ====== About ====== */
-    #about { margin-block: clamp(24px, 6vw, 72px); }
-    #about h2 { color: var(--accent); margin: 0 0 12px 0; }
-
-    /* ====== Footer ====== */
-    footer {
-      background: var(--brand); color: #fff; padding: 24px 0 36px;
-      margin-top: clamp(24px, 6vw, 72px);
-    }
-    footer .grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
-    @media (min-width: 640px) { footer .grid { grid-template-columns: 2fr 1fr; } }
-    footer a { color: #fff; }
-
-    /* ====== Floating CTA / Form ====== */
-    .cta-floating {
-      position: fixed; z-index: 1015; left: 12px; bottom: 12px; /* mobile-friendly bottom-left */
-      display: flex; gap: 8px; align-items: center;
-    }
-    @media (min-width: 768px) { .cta-floating { left: 24px; bottom: 24px; } }
-
-    dialog#appointment-form {
-      border: 0; border-radius: var(--radius); box-shadow: var(--shadow); padding: 0; width: min(520px, 92vw);
-    }
-    .dialog-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: var(--brand); color: #fff; border-radius: var(--radius) var(--radius) 0 0; }
-    .dialog-body { padding: 18px; background: #fff; }
-    .close-btn { background: none; border: none; color: inherit; font-size: 22px; cursor: pointer; }
-    form .row { display: grid; gap: 12px; grid-template-columns: 1fr; }
-    @media (min-width: 520px) { form .row.two { grid-template-columns: 1fr 1fr; } }
-    input, select, textarea { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid #d6d6d6; font: inherit; }
-    textarea { min-height: 96px; resize: vertical; }
-
-    /* ====== Motion reduce ====== */
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
-    }
+    footer{background:var(--brand);color:#fff;padding:24px 0;margin-top:60px}
   </style>
+  <style>
+    /* === Overrides per requested changes (non-destructive) === */
+    .cta-top-left{position:absolute; top:calc(var(--nav-h) + 12px); left:12px; z-index:2}
 
-  <!-- Schema.org for better search results -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "SkySure Inspections",
-    "image": "Final_Logo_Transparent.png",
-    "url": "https://skysureinspections.com/",
-    "telephone": "+1-704-885-5795",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Charlotte",
-      "addressRegion": "NC",
-      "addressCountry": "US"
-    },
-    "areaServed": "Charlotte metropolitan area",
-    "description": "Drone roof snapshots and property flyovers. FAA Part 107 certified and insured.",
-    "openingHoursSpecification": [
-      {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"20:00"},
-      {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"09:00","closes":"18:00"},
-      {"@type":"OpeningHoursSpecification","dayOfWeek":["Sunday"],"opens":"09:00","closes":"12:00"}
-    ]
-  }
-  </script>
+    /* Center the 3-2 Services grid and keep pattern */
+    #services .service-grid{grid-template-columns:repeat(3, minmax(280px, 360px)); justify-content:center; margin-inline:auto}
+    @media (max-width:1100px){ #services .service-grid{grid-template-columns:repeat(2, minmax(260px, 360px));} }
+    @media (max-width:700px){ #services .service-grid{grid-template-columns:1fr; justify-content:stretch;} }
+
+    /* Move section titles just outside the white box, upper-left */
+    .panel > h2{ position:relative; left:-8px; top:-14px; margin:0 0 -6px 0; color:var(--accent); }
+  </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-
-  <!-- ====== NAVBAR ====== -->
-  <div class="nav-container" role="navigation" aria-label="Primary">
-    <nav class="wrap">
-      <a class="brand" href="https://ahdworsky.github.io/SkySureMobile/" aria-label="SkySure home">
-        <img src="Final_Logo_Transparent.png" alt="SkySure Inspections logo" loading="lazy" decoding="async" />
-        <span>SkySure Inspections</span>
-      </a>
-      <div class="nav-links" role="menubar">
-        <a role="menuitem" href="#services">Services</a>
-        <a role="menuitem" href="#about">About</a>
-        <button class="btn btn-outline" type="button" onclick="openForm()">Schedule</button>
-      </div>
-    </nav>
-  </div>
-
-  <!-- ====== HEADER / HERO ====== -->
-  <header id="top" role="banner">
-    <div class="wrap">
-      <img id="main-logo" src="Final_Logo_Transparent.png" alt="SkySure Inspections" class="logo-large" style="background-color: transparent;" />
-      <p style="max-width: 62ch; margin: 16px auto 0; font-size: clamp(1rem, 2.3vw, 1.125rem);">
-        FAA Part 107 certified and insured. Clear, sky‑high views before you make your next move.
-      </p>
-      <div style="margin-top: 16px; display:flex; gap:12px; justify-content:center; flex-wrap: wrap;">
-        <a class="btn btn-accent" href="#services">See services</a>
-        <button class="btn btn-primary" type="button" onclick="openForm()">Schedule an inspection</button>
-      </div>
+  <div class="nav-container">
+    <div class="nav-links">
+      <a href="https://ahdworsky.github.io/SkySureMobile/">Home</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
     </div>
+  </div>
+  <div class="cta-top-left"><button class="btn" type="button">Schedule an Inspection</button></div>
+
+  <header id="top">
+    <img id="main-logo" src="Final_Logo_Transparent.png" alt="SkySure Inspections" />
+    <p>Because What You Can’t See Can Cost You</p>
   </header>
 
-  <main id="main" tabindex="-1">
-    <!-- ====== SERVICES ====== -->
-    <section id="services" aria-labelledby="svc-h2">
-      <div class="wrap">
-        <div class="panel">
-          <h2 id="svc-h2">Services</h2>
-          <div class="service-grid" aria-live="polite">
-            <article class="service-box" aria-label="Roof Snapshot">
-              <h3>Roof Snapshot</h3>
-              <p>High‑resolution aerial imagery for a quick overview of your roof’s condition.</p>
-              <p class="price">$125 / $175</p>
-            </article>
-            <article class="service-box" aria-label="Detailed Roof Report">
-              <h3>Detailed Roof Report</h3>
-              <p>In‑depth drone imaging documenting wear or damage—ideal for buyers or sellers.</p>
-              <p class="price">$150 / $200</p>
-            </article>
-            <article class="service-box" aria-label="Realtor Marketing Add‑On">
-              <h3>Realtor Marketing Add‑On</h3>
-              <p>Aerial footage to elevate your listing with dramatic views and visual clarity.</p>
-              <p class="price">$50 add‑on</p>
-            </article>
-            <article class="service-box" aria-label="Land Survey Flyover">
-              <h3>Land Survey Flyover</h3>
-              <p>Visualize property lines, terrain, and boundaries for undeveloped or large parcels.</p>
-              <p class="price">Quote required</p>
-            </article>
-            <article class="service-box" aria-label="Insurance Claim Documentation">
-              <h3>Insurance Claim Documentation</h3>
-              <p>Capture detailed roof damage imagery to support faster, smoother claim resolution.</p>
-              <p class="price">$150 flat rate</p>
-            </article>
-          </div>
-        </div>
+  <main>
+    <section id="services">
+      <h2>Services</h2>
+      <div class="service-grid">
+        <div class="service-box">Service 1</div>
+        <div class="service-box">Service 2</div>
+        <div class="service-box">Service 3</div>
+        <div class="service-box">Service 4</div>
+        <div class="service-box">Service 5</div>
       </div>
     </section>
 
-    <!-- ====== ABOUT ====== -->
-    <section id="about" aria-labelledby="about-h2">
-      <div class="wrap">
-        <div class="panel">
-          <h2 id="about-h2">About SkySure</h2>
-          <p>
-            SkySure Inspections was created to give buyers, sellers, homeowners, and real estate agents peace of mind by offering a bird’s‑eye view of one of the most expensive components of a home—the roof. With drone technology, we provide sharp aerial imagery that shows roof condition, potential damage, and layout before making an offer or listing a property. Our mission is to deliver fast, visual confidence from above.
-          </p>
-        </div>
-      </div>
+    <section id="about">
+      <h2>About SkySure</h2>
+      <div class="service-box">About content here.</div>
     </section>
   </main>
 
-  <!-- ====== FOOTER ====== -->
-  <footer role="contentinfo">
-    <div class="wrap">
-      <div class="grid">
-        <div>
-          <strong>FAA Part 107 Certified • Insured</strong><br />
-          Not a home inspection – just a clear, sky‑high view of what matters most.
-        </div>
-        <div>
-          <div><strong>Email:</strong> <a href="mailto:aaron@skysure.com">aaron@skysure.com</a></div>
-          <div><strong>Phone:</strong> <a href="tel:+17048855795">704‑885‑5795</a></div>
-          <div><strong>Location:</strong> Charlotte & surrounding areas</div>
-          <div><strong>Hours:</strong> M–F 9am–8pm • Sat 9am–6pm • Sun 9am–12pm</div>
-        </div>
-      </div>
-    </div>
+  <footer>
+    <p>Footer content here</p>
   </footer>
-
-  <!-- ====== Floating CTA & Modal Form (accessible) ====== -->
-  <div class="cta-floating">
-    <button class="btn btn-primary" type="button" onclick="openForm()" aria-haspopup="dialog" aria-controls="appointment-form">Schedule an Inspection</button>
-  </div>
-
-  <dialog id="appointment-form" aria-labelledby="form-title">
-    <div class="dialog-head">
-      <h3 id="form-title" style="margin:0">Schedule an Inspection</h3>
-      <button class="close-btn" onclick="closeForm()" aria-label="Close">×</button>
-    </div>
-    <div class="dialog-body">
-      <form id="inspection-form" action="https://formspree.io/f/xnnzvgyl" method="POST">
-        <div class="row two">
-          <div>
-            <label for="name">Name</label>
-            <input id="name" name="Name" type="text" placeholder="Name" required />
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <input id="email" name="Email" type="email" placeholder="Email" required />
-          </div>
-        </div>
-        <div class="row two">
-          <div>
-            <label for="phone">Phone</label>
-            <input id="phone" name="Phone" type="tel" placeholder="Phone #" />
-          </div>
-          <div>
-            <label for="service">Service</label>
-            <select id="service" name="Service">
-              <option value="Roof Snapshot">Roof Snapshot</option>
-              <option value="Detailed Roof Report">Detailed Roof Report</option>
-              <option value="Realtor Marketing Add-On">Realtor Marketing Add-On</option>
-              <option value="Land Survey Flyover">Land Survey Flyover</option>
-              <option value="Insurance Claim Documentation">Insurance Claim Documentation</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <div>
-            <label for="timeframe">Preferred Timeframe</label>
-            <input id="timeframe" name="Timeframe" type="text" placeholder="Preferred timeframe" />
-          </div>
-        </div>
-        <div class="row">
-          <div>
-            <label for="comments">Additional Comments</label>
-            <textarea id="comments" name="Comments" placeholder="Additional comments"></textarea>
-          </div>
-        </div>
-        <div class="row" style="margin-top:8px;">
-          <button class="btn btn-primary" type="submit">Submit</button>
-          <button class="btn btn-outline" type="button" onclick="closeForm()">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </dialog>
-
-  <div id="confirmation-popup" hidden role="status" aria-live="polite" aria-atomic="true" style="position: fixed; left: 50%; top: 30%; transform: translate(-50%, -50%); background: #fff; border: 2px solid var(--brand); border-radius: var(--radius); padding: 24px 28px; z-index: 2000; box-shadow: var(--shadow); text-align:center;">
-    <button class="close-btn" onclick="closePopup()" aria-label="Close" style="position:absolute; top:8px; right:10px;">×</button>
-    <p style="margin:0"><strong>Request received.</strong><br/>Someone will contact you shortly.</p>
-  </div>
-
-  <script>
-    // ====== Logo shrink-to-top-right when Services comes into view ======
-    const logoEl = document.getElementById('main-logo');
-    const servicesEl = document.getElementById('services');
-    const updateLogo = () => {
-      const triggerY = servicesEl.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) + 24);
-      if (window.scrollY >= triggerY) logoEl.classList.add('logo-fixed-small');
-      else logoEl.classList.remove('logo-fixed-small');
-    };
-    window.addEventListener('scroll', updateLogo, { passive: true });
-    window.addEventListener('resize', updateLogo);
-    document.addEventListener('DOMContentLoaded', updateLogo);
-
-    // ====== Form modal helpers ======
-    const dialog = document.getElementById('appointment-form');
-    function openForm(){ if (!dialog.open) dialog.showModal(); }
-    function closeForm(){ if (dialog.open) dialog.close(); }
-
-    // Close on ESC or click outside (native dialog already handles backdrop)
-    dialog?.addEventListener('cancel', (e)=>{ /* keep default to close */ });
-
-    // ====== Form submit to Formspree ======
-    const formElement = document.getElementById('inspection-form');
-    const popup = document.getElementById('confirmation-popup');
-    function closePopup(){ popup.setAttribute('hidden', ''); }
-
-    formElement?.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const formData = new FormData(formElement);
-      try {
-        const res = await fetch(formElement.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
-        if (res.ok) {
-          formElement.reset();
-          closeForm();
-          popup.removeAttribute('hidden');
-        } else {
-          alert('There was a problem submitting the form. Please try again later.');
-        }
-      } catch(err){
-        console.error(err);
-        alert('There was an error sending your request.');
-      }
-    });
-
-    // Accessibility improvement: focus main on hash nav
-    if ('onhashchange' in window) {
-      window.addEventListener('hashchange', () => {
-        const el = document.getElementById(location.hash.slice(1));
-        if (el) el.setAttribute('tabindex', '-1'), el.focus({ preventScroll: true });
-      });
-    }
-  </script>
 </body>
 </html>
