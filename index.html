@@ -15,8 +15,8 @@
     .nav-links{display:flex;gap:clamp(24px,4vw,48px)}
     .nav-links a{color:#fff;text-decoration:none;font-weight:700}
 
-    /* Schedule button just below nav, static */
-    .cta-top-left{position:absolute;top:calc(var(--nav-h) + 12px);left:12px;z-index:2}
+    /* Schedule button fixed below nav */
+    .cta-top-left{position:fixed;top:calc(var(--nav-h) + 12px);left:12px;z-index:1010}
     .btn{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:12px 20px;font-weight:800;cursor:pointer;box-shadow:var(--shadow)}
 
     /* Header */
@@ -39,7 +39,8 @@
     #about > h2{color:var(--accent);position:absolute;top:-40px;left:0;margin:0}
     #about .panel{background:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
 
-    footer{background:var(--brand);color:#fff;padding:24px 0;margin-top:60px}
+    footer{background:var(--brand);color:#fff;padding:24px 0;margin-top:60px;text-align:center}
+    footer p{margin:6px 0}
   </style>
 </head>
 <body>
@@ -51,11 +52,12 @@
     </div>
   </div>
 
+  <div class="cta-top-left">
+    <button class="btn" type="button" onclick="document.getElementById('appointment-form')?.showModal?.()">Schedule an Inspection</button>
+  </div>
+
   <header id="top">
     <div class="wrap" style="max-width:1200px;margin:0 auto;">
-      <div class="cta-top-left" style="margin:12px 0 0 12px;">
-        <button class="btn" type="button" onclick="document.getElementById('appointment-form')?.showModal?.()">Schedule an Inspection</button>
-      </div>
       <img id="main-logo" src="Final_Logo_Transparent.png" alt="SkySure Inspections" />
       <p>Because What You Can’t See Can Cost You</p>
     </div>
@@ -102,7 +104,11 @@
   </main>
 
   <footer>
-    <p>FAA Part 107 Certified • Insured | Not a home inspection – just a clear, sky‑high view of what matters most.</p>
+    <p>FAA Part 107 Certified | Insured | Not a home inspection – just a clear, sky‑high view of what matters most.</p>
+    <p>Email: <a href="mailto:aaron@skysure.com" style="color:#fff;">aaron@skysure.com</a></p>
+    <p>Phone: <a href="tel:+17048855795" style="color:#fff;">704-885-5795</a></p>
+    <p>Location: Charlotte &amp; surrounding areas</p>
+    <p>Hours: M–F 9am–8pm | Sat 9am–6pm | Sun 9am–12pm</p>
   </footer>
 </body>
 </html>
