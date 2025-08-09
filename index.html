@@ -16,7 +16,7 @@
     .nav-links a{color:#fff;text-decoration:none;font-weight:700}
 
     /* Schedule button just below nav, static */
-    .cta-top-left{position:absolute;top:var(--nav-h);left:12px;margin-top:8px}
+    .cta-top-left{position:absolute;top:calc(var(--nav-h) + 12px);left:12px;z-index:2}
     .btn{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:12px 20px;font-weight:800;cursor:pointer;box-shadow:var(--shadow)}
 
     /* Header */
@@ -24,29 +24,22 @@
     #main-logo{width:clamp(220px,32vw,420px);display:block;margin:0 auto}
 
     /* Services */
-    #services{margin-block:60px}
-    #services h2{color:var(--accent);position:absolute;top:-40px;left:0;margin:0}
-    .service-grid{display:grid;gap:20px;grid-template-columns:repeat(3,minmax(280px,1fr));justify-content:center}
-    @media (max-width:1100px){.service-grid{grid-template-columns:repeat(2,minmax(260px,1fr));justify-content:center}}
+    #services{margin-block:60px;position:relative}
+    #services > h2{color:var(--accent);position:absolute;top:-40px;left:0;margin:0}
+    .service-grid{display:grid;gap:20px;grid-template-columns:repeat(3,minmax(280px,360px));justify-content:center;margin-inline:auto}
+    @media (max-width:1100px){.service-grid{grid-template-columns:repeat(2,minmax(260px,360px));justify-content:center}}
+    @media (max-width:700px){.service-grid{grid-template-columns:1fr;justify-content:stretch}}
     .service-box{background:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;text-align:center}
+    .service-box h3{margin-top:0;color:var(--brand)}
+    .service-box p{margin:8px 0}
+    .price{color:var(--accent);font-weight:900}
 
     /* About */
     #about{margin-block:60px;position:relative}
-    #about h2{color:var(--accent);position:absolute;top:-40px;left:0;margin:0}
+    #about > h2{color:var(--accent);position:absolute;top:-40px;left:0;margin:0}
+    #about .panel{background:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
 
     footer{background:var(--brand);color:#fff;padding:24px 0;margin-top:60px}
-  </style>
-  <style>
-    /* === Overrides per requested changes (non-destructive) === */
-    .cta-top-left{position:absolute; top:calc(var(--nav-h) + 12px); left:12px; z-index:2}
-
-    /* Center the 3-2 Services grid and keep pattern */
-    #services .service-grid{grid-template-columns:repeat(3, minmax(280px, 360px)); justify-content:center; margin-inline:auto}
-    @media (max-width:1100px){ #services .service-grid{grid-template-columns:repeat(2, minmax(260px, 360px));} }
-    @media (max-width:700px){ #services .service-grid{grid-template-columns:1fr; justify-content:stretch;} }
-
-    /* Move section titles just outside the white box, upper-left */
-    .panel > h2{ position:relative; left:-8px; top:-14px; margin:0 0 -6px 0; color:var(--accent); }
   </style>
 </head>
 <body>
@@ -57,33 +50,59 @@
       <a href="#about">About</a>
     </div>
   </div>
-  <div class="cta-top-left"><button class="btn" type="button">Schedule an Inspection</button></div>
 
   <header id="top">
-    <img id="main-logo" src="Final_Logo_Transparent.png" alt="SkySure Inspections" />
-    <p>Because What You Can’t See Can Cost You</p>
+    <div class="wrap" style="max-width:1200px;margin:0 auto;">
+      <div class="cta-top-left" style="margin:12px 0 0 12px;">
+        <button class="btn" type="button" onclick="document.getElementById('appointment-form')?.showModal?.()">Schedule an Inspection</button>
+      </div>
+      <img id="main-logo" src="Final_Logo_Transparent.png" alt="SkySure Inspections" />
+      <p>Because What You Can’t See Can Cost You</p>
+    </div>
   </header>
 
   <main>
     <section id="services">
       <h2>Services</h2>
       <div class="service-grid">
-        <div class="service-box">Service 1</div>
-        <div class="service-box">Service 2</div>
-        <div class="service-box">Service 3</div>
-        <div class="service-box">Service 4</div>
-        <div class="service-box">Service 5</div>
+        <article class="service-box">
+          <h3>Roof Snapshot</h3>
+          <p>High‑resolution aerial imagery for a quick overview of your roof’s condition.</p>
+          <p class="price">$125 (&lt;2,500 sq. ft.) / $175 (&gt;2,500 sq. ft.)</p>
+        </article>
+        <article class="service-box">
+          <h3>Detailed Roof Report</h3>
+          <p>In‑depth imaging documenting wear or damage—ideal for buyers or sellers who want more detail.</p>
+          <p class="price">$150 (&lt;2,500 sq. ft.) / $200 (&gt;2,500 sq. ft.)</p>
+        </article>
+        <article class="service-box">
+          <h3>Realtor Marketing Add‑On</h3>
+          <p>Aerial photos/video to elevate listing presentations with dramatic roofline and lot context.</p>
+          <p class="price">$50 add‑on</p>
+        </article>
+        <article class="service-box">
+          <h3>Land Survey Flyover</h3>
+          <p>Visualize property lines, terrain, and access on large or undeveloped parcels.</p>
+          <p class="price">Request a quote</p>
+        </article>
+        <article class="service-box">
+          <h3>Insurance Claim Documentation</h3>
+          <p>Capture clear roof damage imagery to support faster, smoother claim resolution.</p>
+          <p class="price">$150 flat rate</p>
+        </article>
       </div>
     </section>
 
     <section id="about">
       <h2>About SkySure</h2>
-      <div class="service-box">About content here.</div>
+      <div class="panel">
+        <p>SkySure Inspections was created to give buyers, sellers, homeowners, and real estate agents peace of mind by offering a bird’s‑eye view of one of the most expensive components of a home—the roof. With drone technology, we provide sharp aerial imagery that shows roof condition, potential damage, and layout before making an offer or listing a property. Our mission is to deliver fast, visual confidence from above.</p>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>Footer content here</p>
+    <p>FAA Part 107 Certified • Insured | Not a home inspection – just a clear, sky‑high view of what matters most.</p>
   </footer>
 </body>
 </html>
