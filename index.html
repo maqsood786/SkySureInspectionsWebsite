@@ -69,17 +69,23 @@
     footer { background: var(--brand); color: #fff; padding: 24px 0; margin-top: 60px; text-align: center; }
     footer p { margin: 6px 0; }
 
+    /* Modal & form styling */
+    body.modal-open { overflow: hidden; }
+    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 1000; }
+    #appointment-form { position: fixed; left: 50%; top: 10vh; transform: translateX(-50%); background: #fff; padding: 20px; border-radius: 12px; box-shadow: var(--shadow); z-index: 1001; width: min(560px, calc(100vw - 32px)); max-height: 80vh; overflow: auto; }
+    #appointment-form .close-btn { position: absolute; top: 10px; right: 10px; background: none; border: 0; font-size: 1.5rem; cursor: pointer; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { display:block; font-weight:700; margin-bottom:6px; }
+    .field input, .field select, .field textarea { width:100%; padding:10px 12px; border:1px solid #cdd6df; border-radius:10px; font: inherit; }
+    #submit-btn { background: var(--accent); color:#fff; border:0; border-radius:999px; padding:12px 20px; font-weight:800; cursor:pointer; box-shadow: var(--shadow); }
+
     /* ===== Desktop lock (3–2, equal size) ===== */
     @media (min-width: 1025px){
       body { padding-top: 900px; }
-      /* Match attached file sizing/behavior */
       .service-grid { grid-template-columns: repeat(3, 1fr); max-width: 1000px; gap: 30px; justify-content: center; margin: 0 auto; }
       .bottom-row  { display: flex; justify-content: center; gap: 30px; margin-top: 30px; }
       .service-box { width: 280px; height: auto; }
-    }
-      .service-grid { grid-template-columns: repeat(3, 280px); justify-content: center; }
-      .bottom-row  { grid-template-columns: repeat(2, 280px); justify-content: center; }
-      .service-box { width: 280px; height: 300px; }
     }
 
     /* ===== Tablets & down ===== */
@@ -97,7 +103,8 @@
       .service-grid, .bottom-row { max-width: min(520px, calc(100vw - 24px)); }
       .service-grid { grid-template-columns: 1fr; }
       .bottom-row  { grid-template-columns: 1fr; }
-      header#top { top: calc(37px + 0.75in + 0.5in); } /* everything but bar down 1/2" */
+      header#top { top: calc(37px + 0.75in + 0.5in); }
+      .form-grid { grid-template-columns: 1fr; }
     }
 
     /* ===== Small phones ===== */
@@ -122,7 +129,7 @@
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       html { scroll-behavior: auto; }
-      .logo-large { transition: none; }
+      /* intentionally removed: .logo-large { transition: none; } */
     }
 
     /* ===== Desktop final lock (matches attached file card sizing) ===== */
@@ -130,10 +137,6 @@
       #services .service-grid{grid-template-columns:repeat(3,1fr) !important; max-width:1000px !important; gap:30px !important; justify-content:center !important; margin:0 auto !important;}
       #services .bottom-row{display:flex !important; justify-content:center !important; gap:30px !important; margin-top:30px !important;}
       #services .service-box{width:280px !important; height:auto !important;}
-    }
-  }
-  </style>
-      .logo-large { transition: none; }
     }
   </style>
 </head>
@@ -148,9 +151,10 @@
     <div class="cta-top-left"><button class="btn" type="button" onclick="toggleForm()">Schedule an Inspection</button></div>
   </div>
 
-  <!-- Header / Logo -->
+  <!-- Modal backdrop -->
   <div id="modal-backdrop" class="backdrop" hidden></div>
 
+  <!-- Appointment form modal -->
   <div id="appointment-form" role="dialog" aria-modal="true" aria-labelledby="appt-title" aria-describedby="appt-desc" tabindex="-1" hidden>
     <button class="close-btn" aria-label="Close form" onclick="toggleForm()">&times;</button>
     <h3 id="appt-title">Schedule an Inspection</h3>
@@ -193,12 +197,14 @@
     </form>
   </div>
 
+  <!-- Confirmation popup -->
   <div id="confirmation-popup" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" hidden>
     <h4 id="confirm-title">Request received.</h4>
     <p>Someone will contact you shortly.</p>
     <button type="button" onclick="closePopup()" aria-label="Close confirmation">OK</button>
   </div>
 
+  <!-- Header / Logo -->
   <header id="top">
     <img id="main-logo" src="Final_Logo_Transparent.png" alt="SkySure Inspections Logo" class="logo-large" />
   </header>
