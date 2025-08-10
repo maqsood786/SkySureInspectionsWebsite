@@ -43,7 +43,7 @@
     .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
     /* Header + Logo */
-    header#top { background: transparent; padding: 10px 20px; text-align: center; position: fixed; top: calc(37px + 0.25in); width: 100%; height: auto; z-index: 1002; }
+    header#top { background: transparent; padding: 10px 20px; text-align: center; position: fixed; top: calc(37px + 0.75in); width: 100%; height: auto; z-index: 1002; }
     .logo-large { max-width: 300px; height: auto; display: block; margin: 0 auto; background: transparent; transition: all 0.5s ease; }
     .logo-fixed-small { max-width: 150px !important; position: fixed; top: calc(var(--nav-h) + 0.125in - 5px); right: 20px; margin: 0 !important; z-index: 1004; }
 
@@ -54,7 +54,7 @@
 
     .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 1000px; gap: 30px; margin: 0 auto; }
     .bottom-row { display: flex; justify-content: center; gap: 30px; margin-top: 30px; }
-    .service-box { width: 280px; background-color: #ffffffcc; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .service-box { width: auto; background-color: #ffffffcc; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
     .service-box h3 { margin-top: 0; color: var(--brand); }
     .service-box p { margin: 8px 0; }
     .price { color: var(--accent); font-weight: 900; }
@@ -100,22 +100,12 @@
       :root { --nav-h: 120px; }
       .service-grid { grid-template-columns: repeat(2, 1fr); max-width: 900px; }
       .bottom-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
-    }
-      .bottom-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+      .service-box { width: 100%; }
     }
 
     @media (max-width: 768px){ /* large phones / portrait tablets */
       :root { --nav-h: 140px; }
       #services { scroll-margin-top: 150px; margin-block: 40px 160px; }
-      .service-grid { grid-template-columns: 1fr; max-width: 520px; }
-      .bottom-row { grid-template-columns: 1fr; }
-      .service-box { width: 100%; }
-      /* Make the section labels flow normally on small screens */
-      #services > h2, #about > h2 { position: static; margin: 0 0 12px 0.125in; }
-      /* Mobile-friendly hero */
-      .logo-large { max-width: 240px; }
-      body { background-attachment: scroll; background-position: center top; }
-    }
       .service-grid { grid-template-columns: 1fr; max-width: 520px; }
       .bottom-row { grid-template-columns: 1fr; }
       .service-box { width: 100%; }
@@ -133,20 +123,16 @@
       #appointment-form { width: min(520px, 96vw); }
       .cta-top-left { position: static; transform: none; margin-top: 4px; }
     }
-      .logo-large { max-width: 220px; }
-      .nav-links { gap: 16px; }
-      #appointment-form { width: min(520px, 96vw); }
-    }
 
     @media (min-width: 1025px){ /* desktops / laptops */
-      body { padding-top: 900px; }
+      .service-grid { grid-template-columns: repeat(3, 280px) !important; max-width: 1000px; justify-content: center; }
+      .bottom-row { display: flex !important; justify-content: center; gap: 30px; margin-top: 30px; }
+      .service-box { width: 280px !important; }
     }
 
-    /* Desktop/laptop layout lock */
-    @media (min-width: 1025px){
-      .service-grid { grid-template-columns: repeat(3, 1fr) !important; max-width: 1000px; }
-      .bottom-row { display: flex !important; justify-content: center; gap: 30px; margin-top: 30px; }
-      .bottom-row > .service-box { width: 280px !important; }
+    /* Mobile: shrink pinned logo size */
+    @media (max-width: 915px){
+      .logo-fixed-small { max-width: 75px !important; right: 12px; }
     }
 
     /* Respect users who prefer less motion */
