@@ -14,6 +14,7 @@
   <style>
     :root { --brand:#0E1F2F; --accent:#EA5A1F; --ink:#1A2A3A; --bg:#fff; --shadow:0 8px 20px rgba(0,0,0,.12); --radius:16px; --nav-h:120px; }
     html { scroll-behavior:smooth; }
+    html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
 
     /* Background */
     body {
@@ -52,87 +53,45 @@
     #services { margin-block: 60px 200px; position: relative; scroll-margin-top: 190px; }
     #services > h2 { color: var(--brand); position: absolute; top: -40px; left: 0.125in; margin: 0; }
 
-    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 1000px; gap: 30px; margin: 0 auto; }
-    .bottom-row { display: flex; justify-content: center; gap: 30px; margin-top: 30px; }
-    .service-box { width: auto; background-color: #ffffffcc; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    .service-box h3 { margin-top: 0; color: var(--brand); }
-    .service-box p { margin: 8px 0; }
-    .price { color: var(--accent); font-weight: 900; }
-
-    #about { margin-block: calc(120px + 1.25in); position: relative; }
-    #about > h2 { color: var(--brand); position: absolute; top: -40px; left: 0.125in; margin: 0; }
-    #about .panel { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
-
-    footer { background: var(--brand); color: #fff; padding: 24px 0; margin-top: 60px; text-align: center; }
-    footer p { margin: 6px 0; }
-
-    /* Backdrop + Modal form (accessible) */
-    body.modal-open { overflow: hidden; }
-    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45); backdrop-filter: blur(1px); z-index: 1006; }
-
-    #appointment-form { position: fixed; top: 100px; left: 50%; transform: translateX(-50%); background-color: #fff; padding: 24px 12px; border-radius: 12px; z-index: 1007; box-shadow: 0 8px 24px rgba(0,0,0,0.3); width: min(520px, 92vw); max-height: calc(80vh - 0.5in); overflow:auto; }
-    #appointment-form .close-btn { position: absolute; top: 10px; right: 14px; font-size: 22px; font-weight: bold; cursor: pointer; background: none; border: 0; }
-    #appointment-form form { margin-top: 8px; }
-    #appointment-form label { font-size: 14px; font-weight: 600; display:block; margin: 10px 0 4px; }
-    #appointment-form input, #appointment-form select, #appointment-form textarea { width: 100%; margin: 0 0 10px; padding: 6px 10px; line-height: 20px; border: 1px solid #cbd5e1; border-radius: 8px; min-height: 22px; font-size: 16px; }
-    #appointment-form textarea { min-height: 45px; resize: vertical; }
-    #appointment-form button[type="submit"] { background-color: var(--brand); color: #fff; padding: 12px 18px; border: none; border-radius: 999px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow); width: 100%; }
-    #appointment-form :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-    #form-message { margin-top: 8px; font-size: 14px; }
-
-    #confirmation-popup { position: fixed; top: 30%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; border: 2px solid var(--brand); border-radius: 12px; padding: 28px; z-index: 1008; box-shadow: 0 8px 24px rgba(0,0,0,0.3); text-align: center; }
-    #confirmation-popup button { margin-top: 12px; background: var(--brand); color:#fff; border:0; border-radius: 999px; padding: 10px 16px; font-weight: 800; cursor: pointer; }
-
-    @media (max-width: 600px){
-      #appointment-form { top: calc(var(--nav-h) + 20px); padding: 20px; }
-      .logo-fixed-small { right: 12px; }
-    }
-      /* Fit form into viewport without internal scroll */
-    #appointment-form { max-height: none; overflow: visible; transform-origin: top center; } #appointment-form *, #appointment-form *::before, #appointment-form *::after { box-sizing: border-box; }
-    #appointment-form .form-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-    #appointment-form .field { display: flex; flex-direction: column; }
-    #appointment-form .full { grid-column: 1 / -1; }
-    #confirmation-popup { max-width: 460px; padding: 22px; }
-    @media (max-width: 600px){ /* already single-column */ }
-
-    /* ===== Responsive tweaks for tablets & phones ===== */
-    @media (max-width: 1024px){ /* tablets / small laptops */
-      :root { --nav-h: 120px; }
-      .service-grid { grid-template-columns: repeat(2, 1fr); max-width: 900px; }
-      .bottom-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
-      .service-box { width: 100%; }
-    }
 
     @media (max-width: 768px){ /* large phones / portrait tablets */
-      :root { --nav-h: 140px; }
-      #services { scroll-margin-top: 150px; margin-block: 40px 160px; }
-      .service-grid { grid-template-columns: 1fr; max-width: 520px; }
-      .bottom-row { grid-template-columns: 1fr; }
-      .service-box { width: 100%; }
-      /* Make the section labels flow normally on small screens */
-      #services > h2, #about > h2 { position: static; margin: 0 0 12px 0.125in; }
-      /* Mobile-friendly hero */
-      .logo-large { max-width: 240px; }
-      body { background-attachment: scroll; background-position: center top; }
+      :root { --nav-h: 100px; }
     }
 
     @media (max-width: 480px){ /* small phones */
-      :root { --nav-h: 150px; }
+      :root { --nav-h: 96px; }
       .logo-large { max-width: 220px; }
       .nav-links { gap: 16px; }
       #appointment-form { width: min(520px, 96vw); }
       .cta-top-left { position: static; transform: none; margin-top: 4px; }
+      header#top { top: calc(37px + 0.75in + 0.5in); }
     }
 
     @media (min-width: 1025px){ /* desktops / laptops */
-      .service-grid { grid-template-columns: repeat(3, 280px) !important; max-width: 1000px; justify-content: center; }
-      .bottom-row { display: flex !important; justify-content: center; gap: 30px; margin-top: 30px; }
+      body { padding-top: 900px; }
+      .service-grid { display:grid; grid-template-columns: repeat(3, 280px); gap:30px; justify-content:center; }
+      .bottom-row { display:grid; grid-template-columns: repeat(2, 280px); justify-content:center; gap:30px; margin-top:30px; }
+      .service-box { width: 280px; height: 300px; display:flex; flex-direction:column; box-sizing:border-box; overflow:hidden; }
+      .service-box h3 { margin: 0 0 8px; }
+      .service-box p:nth-of-type(2) { flex:1; display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient: vertical; overflow:hidden; }
+      .service-box p:last-child { margin-top:auto; font-weight:700; }
+    }
+      .service-grid { display:grid; grid-template-columns: repeat(3, 280px) !important; gap:30px; justify-content:center; max-width:none; }
       .service-box { width: 280px !important; }
+      .bottom-row { display:grid !important; grid-template-columns: repeat(2, 280px); justify-content:center; gap:30px; margin-top:30px; }
     }
 
     /* Mobile: shrink pinned logo size */
-    @media (max-width: 915px){
+    @media (max-width: 915px){ /* phones incl. landscape */
       .logo-fixed-small { max-width: 75px !important; right: 12px; }
+    }
+
+    /* Mobile landscape equalize widths */
+    @media (orientation: landscape) and (max-width: 915px){
+      .service-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .bottom-row { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; }
+      .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; padding-inline: 12px; }
+      .service-box { width: 100% !important; }
     }
 
     /* Respect users who prefer less motion */
