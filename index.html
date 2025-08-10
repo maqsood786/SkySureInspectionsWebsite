@@ -2,112 +2,124 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0E1F2F" />
   <title>SkySure Inspections</title>
   <style>
-    html { scroll-behavior: smooth; }
-    :root { --brand:#0E1F2F; --accent:#EA5A1F; --ink:#1A2A3A; }
+    :root { --brand:#0E1F2F; --accent:#EA5A1F; --ink:#1A2A3A; --bg:#fff; --shadow:0 8px 20px rgba(0,0,0,.12); --radius:16px; --nav-h:80px; }
+    html { scroll-behavior:smooth; }
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding-top: 900px;
-      color: #1A2A3A;
+      color: var(--ink);
       background: url('Background.png') no-repeat center center fixed;
       background-size: cover;
-      background-color: transparent;
       z-index: 0;
       position: relative;
       overflow-x: hidden;
-      min-height: 100vh;
+      background-color: transparent;
     }
-    .nav-container {
-      background-color: var(--brand);
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 1005;
-      display: flex; align-items: center; justify-content: center;
-      padding: 8px 10px;
-    }
-    nav {
-      display: flex; align-items: center; justify-content: center;
-      gap: clamp(12px, 4vw, 28px);
-      font-weight: 700;
-      white-space: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    nav::-webkit-scrollbar { display: none; }
-    nav a { color:#fff; text-decoration:none; margin:0; padding:8px 0; font-size: clamp(.9rem, 2.2vw, 1rem); }
-    .cta-top-left { position: fixed; top: 60px; left: 12px; z-index:1003; }
-    .cta-top-left button { background:var(--brand); color:#fff; border:0; border-radius:8px; padding:10px 14px; font-weight:700; cursor:pointer; }
-    header { text-align:center; padding: 8px 20px 0; }
-    #main-logo { max-width:320px; height:auto; display:block; margin:0 auto -8px; transition: all .35s ease; }
+
+    /* Nav */
+    .nav-container {position:fixed;top:0;left:0;width:100%;height:var(--nav-h);background:var(--brand);z-index:1005;display:flex;align-items:center;justify-content:center}
+    .nav-links {display:flex;gap:clamp(24px,4vw,48px)}
+    .nav-links a {color:#fff;text-decoration:none;font-weight:700}
+
+    /* Schedule button fixed below nav */
+    .cta-top-left {position:fixed;top:calc(var(--nav-h) + 12px);left:12px;z-index:1010}
+    .btn {background:var(--accent);color:#fff;border:0;border-radius:999px;padding:12px 20px;font-weight:800;cursor:pointer;box-shadow:var(--shadow)}
+
+    /* Header */
+    header#top {padding-top:calc(var(--nav-h) + 80px);padding-bottom:160px;text-align:center}
+    #main-logo {width:clamp(220px,32vw,420px);display:block;margin:0 auto}
+
+    /* Services */
+    #services {margin-block:60px 200px;position:relative;scroll-margin-top: 190px;}
+    #services > h2 {color:var(--brand);position:absolute;top:-40px;left:0.125in !important;margin:0}
+    .service-grid, .bottom-row {display:flex;gap:20px;justify-content:center;flex-wrap:wrap;max-width:1200px;margin:0 auto}
+    .bottom-row {margin-top:30px;}
+    .service-box {flex:1 1 280px;max-width:360px;background:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;text-align:center}
+    .service-box h3 {margin-top:0;color:var(--brand)}
+    .service-box p {margin:8px 0}
+    .price {color:var(--accent);font-weight:900}
+
+    /* About */
+    #about {margin-block:calc(120px + 0.5in);position:relative}
+    #about > h2 {color:var(--brand);position:absolute;top:-40px;left:0.125in !important;margin:0}
+    #about .panel {background:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+
+    footer {background:var(--brand);color:#fff;padding:24px 0;margin-top:60px;text-align:center}
+    footer p {margin:6px 0}
   </style>
 </head>
 <body>
   <div class="nav-container">
-    <nav>
-      <a href="https://ahdworsky.github.io/SkySureMobile/">Home</a>
+    <div class="nav-links">
+      <a href="https://ahdworsky.github.io/SkySureInspectionsWebsite/">Home</a>
       <a href="#services">Services</a>
       <a href="#about">About</a>
-    </nav>
+    </div>
   </div>
+
   <div class="cta-top-left">
-    <button onclick="toggleForm()">Schedule an Inspection</button>
+    <button class="btn" type="button" onclick="document.getElementById('appointment-form')?.showModal?.()">Schedule an Inspection</button>
   </div>
+
   <header id="top">
-    <img id="main-logo" src="Final_Logo_Transparent.png" alt="SkySure Inspections Logo" onerror="this.onerror=null; this.src='Final_Logo.png';" />
+    <div class="wrap" style="max-width:1200px;margin:0 auto;">
+      <img id="main-logo" src="Final_Logo_Transparent.png" alt="SkySure Inspections" />
+    </div>
   </header>
-  <section id="services">
-    <h2>Services</h2>
-    <div class="service-grid">
-      <div class="service-box">
-        <h3>Roof Snapshot</h3>
-        <p>High-resolution aerial imagery for a quick overview of your roof’s condition.</p>
-        <p><strong>$125 / $175</strong></p>
+
+  <main>
+    <section id="services">
+      <h2>Services</h2>
+      <div class="service-grid">
+        <div class="service-box">
+          <h3>Roof Snapshot</h3>
+          <p>High-resolution aerial imagery for a quick overview of your roof’s condition.</p>
+          <p class="price">$125 / $175</p>
+        </div>
+        <div class="service-box">
+          <h3>Detailed Roof Report</h3>
+          <p>In-depth drone imaging documenting wear or damage—great for buyers or sellers.</p>
+          <p class="price">$150 / $200</p>
+        </div>
+        <div class="service-box">
+          <h3>Realtor Marketing Add-On</h3>
+          <p>Aerial footage to elevate your listing with dramatic views and visual clarity.</p>
+          <p class="price">$50 Add-On</p>
+        </div>
       </div>
-      <div class="service-box">
-        <h3>Detailed Roof Report</h3>
-        <p>In-depth drone imaging documenting wear or damage—great for buyers or sellers.</p>
-        <p><strong>$150 / $200</strong></p>
+      <div class="bottom-row">
+        <div class="service-box">
+          <h3>Land Survey Flyover</h3>
+          <p>Visualize property lines, terrain, and boundaries for undeveloped or large parcels.</p>
+          <p class="price">Quote Required</p>
+        </div>
+        <div class="service-box">
+          <h3>Insurance Claim Documentation</h3>
+          <p>Capture detailed roof damage imagery to support faster, smoother claim resolution.</p>
+          <p class="price">$150 Flat Rate</p>
+        </div>
       </div>
-      <div class="service-box">
-        <h3>Realtor Marketing Add-On</h3>
-        <p>Aerial footage to elevate your listing with dramatic views and visual clarity.</p>
-        <p><strong>$50 Add-On</strong></p>
+    </section>
+
+    <section id="about">
+      <h2>About SkySure</h2>
+      <div class="panel">
+        <p>SkySure Inspections was created to give buyers, sellers, homeowners, and real estate agents peace of mind by offering a bird’s‑eye view of one of the most expensive components of a home—the roof. With drone technology, we provide sharp aerial imagery that shows roof condition, potential damage, and layout before making an offer or listing a property. Our mission is to deliver fast, visual confidence from above.</p>
       </div>
-      <div class="service-box">
-        <h3>Land Survey Flyover</h3>
-        <p>Visualize property lines, terrain, and boundaries for undeveloped or large parcels.</p>
-        <p><strong>Quote Required</strong></p>
-      </div>
-      <div class="service-box">
-        <h3>Insurance Claim Documentation</h3>
-        <p>Capture detailed roof damage imagery to support faster, smoother claim resolution.</p>
-        <p><strong>$150 Flat Rate</strong></p>
-      </div>
-    </div>
-  </section>
-  <section id="about">
-    <h2>About SkySure</h2>
-    <div class="content-card">
-      <p>
-        SkySure Inspections was created to give buyers, sellers, homeowners, and real estate agents peace of mind by offering a bird’s-eye view of one of the most expensive components of a home—the roof. With drone technology, we provide sharp aerial imagery that shows roof condition, potential damage, and layout before making an offer or listing a property.
-      </p>
-    </div>
-  </section>
+    </section>
+  </main>
+
   <footer>
-    FAA Part 107 Certified | Insured | Not a home inspection – just a clear, sky-high view of what matters most.<br><br>
-    <strong>Email:</strong> aaron@skysure.com<br>
-    <strong>Phone:</strong> 704-885-5795<br>
-    <strong>Location:</strong> Charlotte & surrounding areas<br>
-    <strong>Hours:</strong> M–F 9am–8pm | Sat 9am–6pm | Sun 9am–12pm
+    <p>FAA Part 107 Certified | Insured | Not a home inspection – just a clear, sky-high view of what matters most.</p>
+    <p>Email: <a href="mailto:aaron@skysure.com" style="color:#fff;">aaron@skysure.com</a></p>
+    <p>Phone: <a href="tel:+17048855795" style="color:#fff;">704-885-5795</a></p>
+    <p>Location: Charlotte &amp; surrounding areas</p>
+    <p>Hours: M–F 9am–8pm | Sat 9am–6pm | Sun 9am–12pm</p>
   </footer>
-  <script>
-    function toggleForm() {
-      const overlay = document.getElementById("appointment-form");
-      const isOpen = overlay.style.display === "block";
-      overlay.style.display = isOpen ? "none" : "block";
-      document.body.style.overflow = isOpen ? "" : "hidden";
-    }
-  </script>
 </body>
 </html>
