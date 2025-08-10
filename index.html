@@ -127,16 +127,22 @@
   </footer>
 
   <script>
-    // Snap logo when Services section reaches the nav line (works with clicking the Services link)
+    // Snap logo when the Services section reaches (or just before) the anchor position
     (function(){
       const logo = document.getElementById('main-logo');
       const services = document.getElementById('services');
-      const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
-      const SNAP_OFFSET = navH + 62; // +24px (¼") to snap sooner
+      function getSnapOffset(){
+        if (!services) return 0;
+        const smt = parseFloat(getComputedStyle(services).scrollMarginTop) || 0; // e.g., 190px
+        if (smt) return smt + 4; // snap just before you'd scroll past the start
+        const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
+        return navH + 110; // fallback
+      }
       function onScroll(){
         if(!logo || !services) return;
+        const snapOffset = getSnapOffset();
         const topInViewport = services.getBoundingClientRect().top;
-        const shouldSnap = topInViewport <= SNAP_OFFSET;
+        const shouldSnap = topInViewport <= snapOffset;
         logo.classList.toggle('logo-fixed-small', shouldSnap);
       }
       window.addEventListener('scroll', onScroll, { passive: true });
