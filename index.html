@@ -19,7 +19,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding-top: 900px; /* positions hero content over background image */
+      padding-top: clamp(480px, 70vh, 900px); /* positions hero content over background image */
       color: var(--ink);
       background: url('Background.png') no-repeat center center fixed;
       background-size: cover;
@@ -94,6 +94,37 @@
     #appointment-form .full { grid-column: 1 / -1; }
     #confirmation-popup { max-width: 460px; padding: 22px; }
     @media (max-width: 600px){ /* already single-column */ }
+
+    /* ===== Responsive tweaks for tablets & phones ===== */
+    @media (max-width: 1024px){ /* tablets / small laptops */
+      .service-grid { grid-template-columns: repeat(2, 1fr); max-width: 900px; }
+      .bottom-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    }
+
+    @media (max-width: 768px){ /* large phones / portrait tablets */
+      #services { scroll-margin-top: 150px; margin-block: 40px 160px; }
+      .service-grid { grid-template-columns: 1fr; max-width: 520px; }
+      .bottom-row { grid-template-columns: 1fr; }
+      .service-box { width: 100%; }
+      /* Make the section labels flow normally on small screens */
+      #services > h2, #about > h2 { position: static; margin: 0 0 12px 0.125in; }
+      /* Mobile-friendly hero */
+      .logo-large { max-width: 240px; }
+      body { background-attachment: scroll; background-position: center top; }
+    }
+
+    @media (max-width: 480px){ /* small phones */
+      .cta-top-left { left: auto; right: 12px; top: calc(var(--nav-h) + 8px); }
+      .logo-large { max-width: 220px; }
+      .nav-links { gap: 16px; }
+      #appointment-form { width: min(520px, 96vw); }
+    }
+
+    /* Respect users who prefer less motion */
+    @media (prefers-reduced-motion: reduce){
+      html { scroll-behavior: auto; }
+      .logo-large { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -354,3 +385,4 @@
   </script>
 </body>
 </html>
+
