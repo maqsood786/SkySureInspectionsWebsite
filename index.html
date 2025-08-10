@@ -72,13 +72,14 @@
     /* Modal & form styling */
     body.modal-open { overflow: hidden; }
     .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 1000; }
-    #appointment-form { position: fixed; left: 50%; top: 10vh; transform: translateX(-50%); background: #fff; padding: 20px; border-radius: 12px; box-shadow: var(--shadow); z-index: 1001; width: min(560px, calc(100vw - 32px)); max-height: 80vh; overflow: auto; }
+    #appointment-form { position: fixed; left: 50%; top: calc(var(--nav-h) + 24px); --form-scale: 0.85; transform: translateX(-50%) scale(var(--form-scale)); transform-origin: top center; background: #fff; padding: 20px; border-radius: 12px; box-shadow: var(--shadow); z-index: 1001; width: min(560px, calc(100vw - 32px)); max-height: 80vh; overflow: auto; }
     #appointment-form .close-btn { position: absolute; top: 10px; right: 10px; background: none; border: 0; font-size: 1.5rem; cursor: pointer; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .form-grid .full { text-align: center; }
     .field.full { grid-column: 1 / -1; }
     .field label { display:block; font-weight:700; margin-bottom:6px; }
     .field input, .field select, .field textarea { width:100%; padding:10px 12px; border:1px solid #cdd6df; border-radius:10px; font: inherit; }
-    #submit-btn { background: var(--accent); color:#fff; border:0; border-radius:999px; padding:12px 20px; font-weight:800; cursor:pointer; box-shadow: var(--shadow); }
+    #submit-btn { background: var(--accent); color:#fff; border:0; border-radius:999px; padding:12px 20px; font-weight:800; cursor:pointer; box-shadow: var(--shadow); display:block; width:66%; min-width:240px; margin: 8px auto 0; }
 
     /* ===== Desktop lock (3–2, equal size) ===== */
     @media (min-width: 1025px){
@@ -272,12 +273,13 @@
 
       function fitModalScale(){
         if (modal.hasAttribute('hidden')) return;
-        modal.style.transform = 'translateX(-50%) scale(1)';
+        const baseScale = parseFloat(getComputedStyle(modal).getPropertyValue('--form-scale')) || 1;
+        modal.style.transform = `translateX(-50%) scale(${baseScale})`;
         modal.style.transformOrigin = 'top center';
         const avail = Math.min(window.innerHeight, document.documentElement.clientHeight) - 40;
         const rect = modal.getBoundingClientRect();
         const scale = Math.min(1, avail / rect.height);
-        modal.style.transform = `translateX(-50%) scale(${scale})`;
+        modal.style.transform = `translateX(-50%) scale(${scale * baseScale})`;
       }
 
       function isOpen(){ return !modal.hasAttribute('hidden'); }
@@ -304,12 +306,13 @@
         document.body.classList.remove('modal-open');
         modal.hidden = true;
         backdrop.hidden = true;
-        modal.style.transform = 'translateX(-50%) scale(1)';
+        modal.style.transform = 'translateX(-50%) scale(' + (parseFloat(getComputedStyle(modal).getPropertyValue('--form-scale')) || 1) + ')';
         window.removeEventListener('resize', fitModalScale);
         window.removeEventListener('orientationchange', fitModalScale);
         if (lastFocus) lastFocus.focus();
       }
 
+      // Expose controls
       window.toggleForm = function(){ isOpen() ? closeModal() : openModal(); };
       window.closePopup = function(){
         const popup = document.getElementById('confirmation-popup');
@@ -317,9 +320,11 @@
         if (lastFocus) lastFocus.focus();
       };
 
+      // Close when clicking outside
       backdrop.addEventListener('click', closeModal);
       closeBtn.addEventListener('click', closeModal);
 
+      // Keyboard handling
       document.addEventListener('keydown', (e)=>{
         if (!isOpen()) return;
         if (e.key === 'Escape') { e.preventDefault(); closeModal(); }
@@ -366,6 +371,18 @@
           }
         });
       }
+
+      // --- Minimal self-tests (non-invasive) ---
+      document.addEventListener('DOMContentLoaded', function(){
+        try {
+          console.assert(typeof window.toggleForm === 'function', 'toggleForm should be defined');
+          console.assert(!!document.getElementById('appointment-form'), '#appointment-form exists');
+          console.assert(!!document.getElementById('modal-backdrop'), '#modal-backdrop exists');
+          console.log('[Self-test] basic checks passed');
+        } catch (e) {
+          console.error('[Self-test] failed', e);
+        }
+      });
     })();
 
     // Snap logo when the Services section reaches (or just before) the anchor position
