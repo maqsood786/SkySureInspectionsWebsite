@@ -125,7 +125,7 @@
       const services = document.getElementById('services');
       function onScroll(){
         if(!logo || !services) return;
-        const triggerY = services.offsetTop - 150;
+        const triggerY = services.getBoundingClientRect().top + window.scrollY;
         if (window.scrollY >= triggerY) {
           logo.classList.add('logo-fixed-small');
         } else {
