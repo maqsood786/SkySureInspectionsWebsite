@@ -43,7 +43,7 @@
     .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
     /* Header + Logo */
-    header#top { background: transparent; padding: 10px 20px; text-align: center; position: fixed; top: 37px; width: 100%; height: auto; z-index: 1002; }
+    header#top { background: transparent; padding: 10px 20px; text-align: center; position: fixed; top: calc(37px + 0.25in); width: 100%; height: auto; z-index: 1002; }
     .logo-large { max-width: 300px; height: auto; display: block; margin: 0 auto; background: transparent; transition: all 0.5s ease; }
     .logo-fixed-small { max-width: 150px !important; position: fixed; top: calc(var(--nav-h) + 0.125in - 5px); right: 20px; margin: 0 !important; z-index: 1004; }
 
@@ -140,6 +140,13 @@
 
     @media (min-width: 1025px){ /* desktops / laptops */
       body { padding-top: 900px; }
+    }
+
+    /* Desktop/laptop layout lock */
+    @media (min-width: 1025px){
+      .service-grid { grid-template-columns: repeat(3, 1fr) !important; max-width: 1000px; }
+      .bottom-row { display: flex !important; justify-content: center; gap: 30px; margin-top: 30px; }
+      .bottom-row > .service-box { width: 280px !important; }
     }
 
     /* Respect users who prefer less motion */
