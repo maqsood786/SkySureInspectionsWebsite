@@ -41,9 +41,10 @@
     #services { margin-block: 60px 200px; position: relative; scroll-margin-top: 190px; }
     #services > h2 { color: var(--brand); position: absolute; top: -40px; left: 0.125in; margin: 0; }
 
-    .service-grid, .bottom-row { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 1000px; gap: 30px; margin: 0 auto; }
+    .bottom-row { display: flex; justify-content: center; gap: 30px; margin-top: 30px; }
     .bottom-row { margin-top: 30px; }
-    .service-box { flex: 1 1 280px; max-width: 360px; background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; text-align: center; }
+    .service-box { width: 280px; background-color: #ffffffcc; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
     .service-box h3 { margin-top: 0; color: var(--brand); }
     .service-box p { margin: 8px 0; }
     .price { color: var(--accent); font-weight: 900; }
@@ -83,29 +84,29 @@
         <div class="service-box">
           <h3>Roof Snapshot</h3>
           <p>High-resolution aerial imagery for a quick overview of your roof’s condition.</p>
-          <p class="price">$125 / $175</p>
+          <p><strong>$125 / $175</strong></p>
         </div>
         <div class="service-box">
           <h3>Detailed Roof Report</h3>
           <p>In-depth drone imaging documenting wear or damage—great for buyers or sellers.</p>
-          <p class="price">$150 / $200</p>
+          <p><strong>$150 / $200</strong></p>
         </div>
         <div class="service-box">
           <h3>Realtor Marketing Add-On</h3>
           <p>Aerial footage to elevate your listing with dramatic views and visual clarity.</p>
-          <p class="price">$50 Add-On</p>
+          <p><strong>$50 Add-On</strong></p>
         </div>
       </div>
       <div class="bottom-row">
         <div class="service-box">
           <h3>Land Survey Flyover</h3>
           <p>Visualize property lines, terrain, and boundaries for undeveloped or large parcels.</p>
-          <p class="price">Quote Required</p>
+          <p><strong>Quote Required</strong></p>
         </div>
         <div class="service-box">
           <h3>Insurance Claim Documentation</h3>
           <p>Capture detailed roof damage imagery to support faster, smoother claim resolution.</p>
-          <p class="price">$150 Flat Rate</p>
+          <p><strong>$150 Flat Rate</strong></p>
         </div>
       </div>
     </section>
