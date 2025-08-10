@@ -132,7 +132,7 @@
       const logo = document.getElementById('main-logo');
       const services = document.getElementById('services');
       const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
-       const SNAP_OFFSET = navH + 38; // moved −24px (¼") to snap sooner
+      const SNAP_OFFSET = navH + 62; // +24px (¼") to snap sooner
       function onScroll(){
         if(!logo || !services) return;
         const topInViewport = services.getBoundingClientRect().top;
@@ -145,4 +145,3 @@
   </script>
 </body>
 </html>
-
