@@ -72,6 +72,11 @@
     /* ===== Desktop lock (3–2, equal size) ===== */
     @media (min-width: 1025px){
       body { padding-top: 900px; }
+      /* Match attached file sizing/behavior */
+      .service-grid { grid-template-columns: repeat(3, 1fr); max-width: 1000px; gap: 30px; justify-content: center; margin: 0 auto; }
+      .bottom-row  { display: flex; justify-content: center; gap: 30px; margin-top: 30px; }
+      .service-box { width: 280px; height: auto; }
+    }
       .service-grid { grid-template-columns: repeat(3, 280px); justify-content: center; }
       .bottom-row  { grid-template-columns: repeat(2, 280px); justify-content: center; }
       .service-box { width: 280px; height: 300px; }
@@ -117,6 +122,17 @@
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       html { scroll-behavior: auto; }
+      .logo-large { transition: none; }
+    }
+
+    /* ===== Desktop final lock (matches attached file card sizing) ===== */
+    @media (min-width:1025px){
+      #services .service-grid{grid-template-columns:repeat(3,1fr) !important; max-width:1000px !important; gap:30px !important; justify-content:center !important; margin:0 auto !important;}
+      #services .bottom-row{display:flex !important; justify-content:center !important; gap:30px !important; margin-top:30px !important;}
+      #services .service-box{width:280px !important; height:auto !important;}
+    }
+  }
+  </style>
       .logo-large { transition: none; }
     }
   </style>
