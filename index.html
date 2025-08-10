@@ -38,7 +38,7 @@
     .nav-links a { color: #fff; text-decoration: none; font-weight: 700; }
 
     /* Call to action */
-    .cta-top-left { position: fixed; top: calc(var(--nav-h) + 12px); left: 12px; z-index: 1010; }
+    .cta-top-left { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); z-index: 1010; }
     .btn { background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 12px 20px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow); }
     .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
@@ -114,10 +114,14 @@
     }
 
     @media (max-width: 480px){ /* small phones */
-      .cta-top-left { left: auto; right: 12px; top: calc(var(--nav-h) + 8px); }
+      .cta-top-left { left: 50%; right: auto; transform: translateX(-50%); bottom: 4px; }
       .logo-large { max-width: 220px; }
       .nav-links { gap: 16px; }
       #appointment-form { width: min(520px, 96vw); }
+    }
+
+    @media (min-width: 1025px){ /* desktops / laptops */
+      body { padding-top: 900px; }
     }
 
     /* Respect users who prefer less motion */
@@ -130,16 +134,8 @@
 <body>
   <!-- Top nav -->
   <div class="nav-container">
-    <div class="nav-links">
-      <a href="https://ahdworsky.github.io/SkySureInspectionsWebsite/">Home</a>
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-top-left">
-    <button class="btn" type="button" onclick="toggleForm()">Schedule an Inspection</button>
+    <div class="nav-links">$1</div>
+    <div class="cta-top-left"><button class="btn" type="button" onclick="toggleForm()">Schedule an Inspection</button></div>
   </div>
 
   <!-- Header / Logo -->
@@ -385,4 +381,3 @@
   </script>
 </body>
 </html>
-
