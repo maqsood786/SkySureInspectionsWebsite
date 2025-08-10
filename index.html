@@ -132,7 +132,7 @@
       const logo = document.getElementById('main-logo');
       const services = document.getElementById('services');
       const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
-      const SNAP_OFFSET = navH + 110; // ~aligns with scroll-margin-top:190px
+      const SNAP_OFFSET = navH + 14; // ~aligns with scroll-margin-top:190px
       function onScroll(){
         if(!logo || !services) return;
         const topInViewport = services.getBoundingClientRect().top;
