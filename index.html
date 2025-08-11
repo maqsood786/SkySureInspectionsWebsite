@@ -148,6 +148,14 @@
       #services .bottom-row{display:flex !important; justify-content:center !important; gap:30px !important; margin-top:30px !important;}
       #services .service-box{width:280px !important; height:auto !important;}
     }
+    /* === Phone portrait tweaks (no desktop impact) === */
+    @media (max-width: 600px) and (orientation: portrait){
+      /* 1) Keep the logo centered even when it snaps smaller */
+      .logo-fixed-small{ left:50% !important; right:auto !important; transform:translateX(-50%) !important; }
+
+      /* 2) Nudge Services section down by 1/2" and keep anchor scroll comfortable */
+      #services{ margin-top: calc(60px + 0.5in); scroll-margin-top: calc(var(--nav-h) + 10px + 0.5in); }
+    }
   </style>
 </head>
 <body>
