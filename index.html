@@ -402,26 +402,36 @@
       });
     })();
 
-    // Snap logo when the Services section reaches (or just before) the anchor position
+    // Snap logo just before service cards would touch the big logo (desktop + mobile)
     (function(){
       const logo = document.getElementById('main-logo');
       const services = document.getElementById('services');
-      function getSnapOffset(){
-        if (!services) return 0;
-        const smt = parseFloat(getComputedStyle(services).scrollMarginTop) || 0; // e.g., var(--nav-h) + 10
-        if (smt) return smt + 4; // snap just before you'd scroll past the start
-        const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
-        return navH + 110; // fallback
+      const grid = services ? services.querySelector('.service-grid') : null; // first white boxes container
+      const buffer = 8; // px "just before" they visually meet
+
+      function computeShouldSnap(){
+        if(!logo || !services) return false;
+        if (grid) {
+          const gridTop = grid.getBoundingClientRect().top;
+          const logoBottom = logo.getBoundingClientRect().bottom;
+          return gridTop <= (logoBottom + buffer);
+        } else {
+          // Fallback to previous behavior
+          const smt = parseFloat(getComputedStyle(services).scrollMarginTop) || 0;
+          const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
+          const snapOffset = (smt || (navH + 110)) + buffer;
+          return services.getBoundingClientRect().top <= snapOffset;
+        }
       }
+
       function onScroll(){
-        if(!logo || !services) return;
-        const snapOffset = getSnapOffset();
-        const topInViewport = services.getBoundingClientRect().top;
-        const shouldSnap = topInViewport <= snapOffset;
-        logo.classList.toggle('logo-fixed-small', shouldSnap);
+        const shouldSnap = computeShouldSnap();
+        logo && logo.classList.toggle('logo-fixed-small', shouldSnap);
       }
+
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('load', onScroll);
+      window.addEventListener('resize', onScroll);
     })();
   </script>
 </body>
