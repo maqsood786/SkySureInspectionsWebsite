@@ -118,7 +118,9 @@
     }
 
     /* Mobile landscape equalize widths (restored original) */
-    @media (orientation: landscape) and (max-width: 915px){
+    $1
+      /* Raise snapped logo to 1/4" below the top task bar */
+      .logo-fixed-small { top: calc(var(--nav-h) + 0.25in) !important; right: 12px; }
       .service-grid { grid-template-columns: repeat(2, 1fr) !important; }
       .bottom-row  { grid-template-columns: repeat(2, 1fr) !important; }
       .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; }
@@ -429,7 +431,9 @@
       const SNAP_IN_BUFFER_DEFAULT = 8;   // px "just before"
       const SNAP_OUT_BUFFER_DEFAULT = 40; // px hysteresis
 
-      const isMobilePortrait = () => window.matchMedia('(max-width: 600px) and (orientation: portrait)').matches;
+      $1
+
+      const isMobileLandscape = () => window.matchMedia('(orientation: landscape) and (max-width: 915px)').matches;
 
       function measureLargeBottom(){
         if (snapped && lastLargeBottom != null) return lastLargeBottom;
@@ -443,7 +447,7 @@
         ticking = false;
         const gridTop = grid.getBoundingClientRect().top;
         const largeBottom = measureLargeBottom();
-        const SNAP_IN_BUFFER = SNAP_IN_BUFFER_DEFAULT;
+        const SNAP_IN_BUFFER = (isMobileLandscape() ? 12 : SNAP_IN_BUFFER_DEFAULT);
         const SNAP_OUT_BUFFER = SNAP_OUT_BUFFER_DEFAULT;
 
         // On mobile portrait, do not snap immediately on load — require user to scroll a bit
