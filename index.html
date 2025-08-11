@@ -169,6 +169,11 @@
       #services{ margin-top: calc(60px + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); margin-bottom: 1in !important; }
       #about{ margin-top: 0 !important; scroll-margin-top: calc(var(--nav-h) + 10px + 0.5in) !important; }
     }
+    /* === Mobile landscape: ensure 1/8" gap below snapped logo === */
+    @media (orientation: landscape) and (max-width: 915px){
+      /* When the logo is snapped, push the first row of cards down to keep ~1/8" gap */
+      body.logo-snapped #services .service-grid { margin-top: var(--snap-gap-adjust, 12px); }
+    }
   </style>
 </head>
 <body>
@@ -247,12 +252,12 @@
         <div class="service-box">
           <h3>Roof Snapshot</h3>
           <p>High-resolution aerial imagery for a quick overview of your roof’s condition.</p>
-          <p><strong>$125 (<2,500 sqft.) / $175</strong></p>
+          <p><strong>$125 (≤ 2,500 sq ft) / $175</strong></p>
         </div>
         <div class="service-box">
           <h3>Detailed Roof Report</h3>
           <p>In-depth drone imaging documenting wear or damage—great for buyers or sellers.</p>
-          <p><strong>$150 (<2,500 sq ft.) / $200</strong></p>
+          <p><strong>$150 (≤ 2,500 sq ft) / $200</strong></p>
         </div>
         <div class="service-box">
           <h3>Realtor Marketing Add-On</h3>
@@ -460,12 +465,27 @@
         if (!snapped && allowSnap && scrollingDown && cardTop <= (largeBottom + SNAP_IN_BUFFER)){
           snapped = true;
           logo.classList.add('logo-fixed-small');
+          document.body.classList.add('logo-snapped');
+          // After layout updates to snapped position, compute the exact gap so first card starts ~1/8" below
+          if (isMobileLandscape()) {
+            requestAnimationFrame(()=>{
+              const snappedBottom = logo.getBoundingClientRect().bottom;
+              const cardTop = firstCard.getBoundingClientRect().top;
+              const targetGap = 12; // 1/8" in CSS px
+              const delta = Math.max(0, (snappedBottom + targetGap) - cardTop);
+              document.body.style.setProperty('--snap-gap-adjust', delta + 'px');
+            });
+          } else {
+            document.body.style.removeProperty('--snap-gap-adjust');
+          }
           // keep largeBottomRef (measured pre-snap) as the stable reference
         }
         // Unsnap only while scrolling UP and crossing the OUT threshold (uses the SAME large threshold)
         else if (snapped && scrollingUp && cardTop >= (largeBottom + SNAP_OUT_BUFFER)){
           snapped = false;
           logo.classList.remove('logo-fixed-small');
+          document.body.classList.remove('logo-snapped');
+          document.body.style.removeProperty('--snap-gap-adjust');
           resetCache(); // re-measure large logo bottom next frame
         }
       }
