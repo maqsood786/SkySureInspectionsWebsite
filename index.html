@@ -402,36 +402,50 @@
       });
     })();
 
-    // Snap logo just before service cards would touch the big logo (desktop + mobile)
+    // Snap logo just before service cards would touch the big logo (desktop + mobile) with hysteresis to prevent flicker
     (function(){
       const logo = document.getElementById('main-logo');
       const services = document.getElementById('services');
-      const grid = services ? services.querySelector('.service-grid') : null; // first white boxes container
-      const buffer = 8; // px "just before" they visually meet
+      const grid = services ? services.querySelector('.service-grid') : null;
+      if (!logo || !services || !grid) return;
 
-      function computeShouldSnap(){
-        if(!logo || !services) return false;
-        if (grid) {
-          const gridTop = grid.getBoundingClientRect().top;
-          const logoBottom = logo.getBoundingClientRect().bottom;
-          return gridTop <= (logoBottom + buffer);
-        } else {
-          // Fallback to previous behavior
-          const smt = parseFloat(getComputedStyle(services).scrollMarginTop) || 0;
-          const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
-          const snapOffset = (smt || (navH + 110)) + buffer;
-          return services.getBoundingClientRect().top <= snapOffset;
+      let snapped = false;
+      let lastLargeBottom = null; // measured when logo is large
+      const SNAP_IN_BUFFER = 8;   // snap when close
+      const SNAP_OUT_BUFFER = 40; // unsnap only after scrolling back further (hysteresis)
+
+      function measureLargeBottom(){
+        if (snapped && lastLargeBottom != null) return lastLargeBottom;
+        const b = logo.getBoundingClientRect().bottom;
+        if (Number.isFinite(b)) lastLargeBottom = b;
+        return lastLargeBottom || 0;
+      }
+
+      let ticking = false;
+      function update(){
+        ticking = false;
+        const gridTop = grid.getBoundingClientRect().top;
+        const largeBottom = measureLargeBottom();
+
+        if (!snapped && gridTop <= (largeBottom + SNAP_IN_BUFFER)){
+          snapped = true;
+          logo.classList.add('logo-fixed-small');
+        } else if (snapped && gridTop >= (largeBottom + SNAP_OUT_BUFFER)){
+          snapped = false;
+          logo.classList.remove('logo-fixed-small');
         }
       }
 
       function onScroll(){
-        const shouldSnap = computeShouldSnap();
-        logo && logo.classList.toggle('logo-fixed-small', shouldSnap);
+        if (!ticking){
+          ticking = true;
+          requestAnimationFrame(update);
+        }
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('load', onScroll);
       window.addEventListener('resize', onScroll);
+      window.addEventListener('load', onScroll);
     })();
   </script>
 </body>
