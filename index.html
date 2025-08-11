@@ -13,143 +13,6 @@
 
   <style>
     :root { --brand:#0E1F2F; --accent:#EA5A1F; --ink:#1A2A3A; --bg:#fff; --shadow:0 8px 20px rgba(0,0,0,.12); --radius:16px; --nav-h:120px; }
-    html { scroll-behavior:smooth; }
-    html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
-
-    /* Background */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding-top: clamp(480px, 70vh, 900px); /* hero height */
-      color: var(--ink);
-      background: url('Background.png') no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
-      background-color: transparent;
-    }
-
-    /* A11y helpers */
-    [hidden] { display: none !important; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-
-    /* Top nav */
-    .nav-container { position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-h); background: var(--brand); z-index: 1005; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6px 12px; }
-    .nav-links { display: flex; gap: clamp(24px,4vw,48px); flex-wrap: wrap; margin-bottom: 6px; }
-    .nav-links a { color: #fff; text-decoration: none; font-weight: 700; }
-
-    /* CTA */
-    .cta-top-left { position: static; transform: none; margin-top: 4px; z-index: 1010; }
-    .btn { background: var(--accent); color: #fff; border: 0; border-radius: 999px; padding: 12px 20px; font-weight: 800; cursor: pointer; box-shadow: var(--shadow); }
-    .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-
-    /* Header + Logo */
-    header#top { background: transparent; padding: 10px 20px; text-align: center; position: fixed; top: calc(37px + 0.75in); width: 100%; height: auto; z-index: 1002; }
-    .logo-large { max-width: 300px; height: auto; display: block; margin: 0 auto; background: transparent; transition: all 0.5s ease; }
-    .logo-fixed-small { max-width: 150px !important; position: fixed; top: calc(var(--nav-h) + 0.125in - 5px); right: 20px; margin: 0 !important; z-index: 1004; }
-
-    /* Sections */
-    main { position: relative; z-index: 1; }
-    #services { margin-block: 60px 200px; position: relative; scroll-margin-top: calc(var(--nav-h) + 10px); }
-    #services > h2 { color: var(--accent); position: absolute; top: -40px; left: 0.125in; margin: 0; }
-
-    /* Cards base */
-    .service-grid, .bottom-row { max-width: min(1000px, calc(100vw - 24px)); margin: 0 auto; gap: 30px; }
-    .service-grid { display: grid; }
-    .bottom-row { display: grid; margin-top: 30px; }
-    .service-box { background-color: #ffffffcc; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden; }
-    .service-box h3 { margin: 0 0 8px; color: var(--brand); }
-    .service-box p { margin: 8px 0; }
-    .service-box p:last-child { margin-top: auto; font-weight: 700; }
-
-    /* About */
-    #about { margin-top: calc(120px + 2.25in); margin-bottom: 120px; position: relative; }
-    #about > h2 { color: var(--accent); position: absolute; top: calc(-40px - 0.5in); left: 0.125in; margin: 0; }
-    #about .panel { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
-
-    footer { background: var(--brand); color: #fff; padding: 24px 0; margin-top: 60px; text-align: center; }
-    footer p { margin: 6px 0; }
-
-    /* Modal & form styling */
-    body.modal-open { overflow: hidden; }
-    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 10000; }
-    #appointment-form { position: fixed; left: 50%; top: calc(var(--nav-h) + 24px); --form-scale: 0.85; transform: translateX(-50%) scale(var(--form-scale)); transform-origin: top center; background: #fff; padding: 20px; border-radius: 12px; box-shadow: var(--shadow); z-index: 10001; width: min(560px, calc(100vw - 32px)); max-height: 80vh; overflow: auto; }
-    #appointment-form .close-btn { position: absolute; top: 10px; right: 10px; background: none; border: 0; font-size: 1.5rem; cursor: pointer; }
-    .form-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-    .field.full { grid-column: 1 / -1; }
-    .field label { display:block; font-weight:700; margin-bottom:6px; }
-    .field input, .field select, .field textarea { width:100%; padding:10px 12px; border:1px solid #cdd6df; border-radius:10px; font: inherit; }
-    #submit-btn { background: var(--accent); color:#fff; border:0; border-radius:999px; padding:12px 20px; font-weight:800; cursor:pointer; box-shadow: var(--shadow); display:block; width:66%; min-width:240px; margin: 8px auto 0; }
-
-    /* Ensure header/logo are non-interactive while modal is open */
-    .modal-open #top,
-    .modal-open .nav-container,
-    .modal-open .logo-large,
-    .modal-open .logo-fixed-small { pointer-events: none; }
-
-    /* ===== Desktop lock (3–2, equal size) ===== */
-    @media (min-width: 1025px){
-      /* Add extra offset so clicking “Services” lands 1" lower on desktop */
-      #services { scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
-      /* Raise About 1.25" on desktop */
-      #about { scroll-margin-top: calc(var(--nav-h) + 10px - 1.25in); }
-      body { padding-top: 900px; }
-      .service-grid { grid-template-columns: repeat(3, 1fr); max-width: 1000px; gap: 30px; justify-content: center; margin: 0 auto; }
-      .bottom-row  { display: flex; justify-content: center; gap: 30px; margin-top: 30px; }
-      .service-box { width: 280px; height: auto; }
-    }
-
-    /* ===== Tablets & down ===== */
-    @media (max-width: 1024px){
-      :root { --nav-h: 110px; }
-      .service-grid { grid-template-columns: repeat(2, 1fr); }
-      .bottom-row  { grid-template-columns: repeat(2, 1fr); }
-      .service-box { width: 100%; height: auto; }
-    }
-
-    /* ===== Large phones / portrait tablets ===== */
-    @media (max-width: 768px){
-      :root { --nav-h: 96px; }
-      #services > h2, #about > h2 { position: static; margin: 0 0 12px 0.125in; }
-      .service-grid, .bottom-row { max-width: min(520px, calc(100vw - 24px)); }
-      .service-grid { grid-template-columns: 1fr; }
-      .bottom-row  { grid-template-columns: 1fr; }
-      header#top { top: calc(37px + 0.75in + 0.5in); }
-      .form-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ===== Small phones ===== */
-    @media (max-width: 480px){
-      :root { --nav-h: 88px; }
-      .nav-links { gap: 16px; }
-    }
-
-    /* Mobile: shrink pinned logo size */
-    @media (max-width: 915px){ /* phones incl. landscape */
-      .logo-fixed-small { max-width: 75px !important; right: 12px; }
-    }
-
-    /* Mobile landscape equalize widths */
-    @media (orientation: landscape) and (max-width: 915px){
-      /* Base landscape rules */
-      .service-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .bottom-row  { grid-template-columns: repeat(2, 1fr) !important; }
-      .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; }
-      .service-box { width: 100% !important; }
-
-      /* --- Requested layout: 2-2-1 with last centered --- */
-      /* Flatten the two inner grids so all five cards flow in one 2-col grid */
-      #services { display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 30px !important; max-width: min(900px, 100vw - 24px) !important; margin: 0 auto !important; align-items: stretch; }
-      #services .service-grid, #services .bottom-row { display: contents !important; }
-      /* Center the last card on its own row */
-      #services .bottom-row .service-box:last-child { grid-column: 1 / -1; justify-self: center; width: min(420px, 100%) !important; }
-
-      /* Lower About section by 1" when using the top nav anchor */
-      #about{ scroll-margin-top: calc(var(--nav-h) + 10px + 1in) !important; }
-    }
-      .bottom-row  { grid-template-columns: repeat(2, 1fr) !important; }
-      .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; }
-      .service-box { width: 100% !important; }
-    }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
@@ -165,14 +28,61 @@
     }
     /* === Phone portrait tweaks (no desktop impact) === */
     @media (max-width: 600px) and (orientation: portrait){
-      /* 1) Keep snapped logo on the right in phone portrait */
+      /* Keep snapped logo on the right in phone portrait */
       .logo-fixed-small{ right:12px !important; left:auto !important; transform:none !important; }
+
+      /* Nudge Services section down by 1/2" and keep anchor scroll comfortable */
+      #services{ margin-top: calc(60px + 0.5in); scroll-margin-top: calc(var(--nav-h) + 10px + 0.5in); }
+
+      /* Lower About by 1" when using the top nav anchor */
+      #about{ scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
+
+      /* Force 1-column service cards in portrait */
+      #services .service-grid,
+      #services .bottom-row {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+        max-width: min(520px, calc(100vw - 24px));
+        margin: 0 auto;
+      }
+      #services .bottom-row { margin-top: 30px; }
+      #services .service-box { width: 100% !important; }
+    }
 
       /* 2) Nudge Services section down by 1/2" and keep anchor scroll comfortable */
       #services{ margin-top: calc(60px + 0.5in); scroll-margin-top: calc(var(--nav-h) + 10px + 0.5in); }
 
       /* 3) Lower About by 1" when using the top nav anchor */
       #about{ scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
+    }
+    /* === Phone landscape (≤915px): 2-2-1 layout with last centered === */
+    @media (orientation: landscape) and (max-width: 915px){
+      #services {
+        display: grid !important;
+        --lg-gap: 30px;
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+        gap: var(--lg-gap) !important;
+        max-width: min(900px, 100vw - 24px) !important;
+        margin: 0 auto !important;
+        align-items: stretch;
+      }
+      #services > h2 {
+        position: static !important;
+        grid-column: 1 / -1;
+        margin: 0 0 12px 0.125in;
+      }
+      #services .service-grid,
+      #services .bottom-row { display: contents !important; }
+      #services .service-box { width: 100% !important; }
+      /* Last card centered, same width as single column */
+      #services .bottom-row .service-box:last-child {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc((100% - var(--lg-gap)) / 2) !important;
+      }
+      /* Lower About by 1" when using top nav anchor */
+      #about { scroll-margin-top: calc(var(--nav-h) + 10px + 1in) !important; }
     }
   </style>
 </head>
@@ -468,3 +378,4 @@
   </script>
 </body>
 </html>
+
