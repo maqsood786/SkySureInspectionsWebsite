@@ -169,11 +169,7 @@
       #services{ margin-top: calc(60px + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); margin-bottom: 1in !important; }
       #about{ margin-top: 0 !important; scroll-margin-top: calc(var(--nav-h) + 10px + 0.5in) !important; }
     }
-    /* === Mobile landscape: ensure 1/8" gap below snapped logo === */
-    @media (orientation: landscape) and (max-width: 915px){
-      /* When the logo is snapped, push the first row of cards down to keep ~1/8" gap */
-      body.logo-snapped #services .service-grid { margin-top: var(--snap-gap-adjust, 12px); }
-    }
+    
   </style>
 </head>
 <body>
@@ -424,8 +420,9 @@
     (function(){
       const logo = document.getElementById('main-logo');
       const services = document.getElementById('services');
-      const firstCard = services ? services.querySelector('.service-box') : null; // precise trigger
-      if (!logo || !services || !firstCard) return;
+      const grid = services ? services.querySelector('.service-grid') : null;
+      const firstCard = grid ? grid.querySelector('.service-box') : null; // precise trigger
+      if (!logo || !services || !grid || !firstCard) return;
 
       // State
       let snapped = false;
@@ -465,18 +462,17 @@
         if (!snapped && allowSnap && scrollingDown && cardTop <= (largeBottom + SNAP_IN_BUFFER)){
           snapped = true;
           logo.classList.add('logo-fixed-small');
-          document.body.classList.add('logo-snapped');
-          // After layout updates to snapped position, compute the exact gap so first card starts ~1/8" below
           if (isMobileLandscape()) {
-            requestAnimationFrame(()=>{
+            // wait two frames for layout to settle after snapping
+            requestAnimationFrame(()=>requestAnimationFrame(()=>{
               const snappedBottom = logo.getBoundingClientRect().bottom;
               const cardTop = firstCard.getBoundingClientRect().top;
               const targetGap = 12; // 1/8" in CSS px
               const delta = Math.max(0, (snappedBottom + targetGap) - cardTop);
-              document.body.style.setProperty('--snap-gap-adjust', delta + 'px');
-            });
+              grid.style.marginTop = delta + 'px';
+            }));
           } else {
-            document.body.style.removeProperty('--snap-gap-adjust');
+            grid.style.marginTop = '';
           }
           // keep largeBottomRef (measured pre-snap) as the stable reference
         }
@@ -484,8 +480,7 @@
         else if (snapped && scrollingUp && cardTop >= (largeBottom + SNAP_OUT_BUFFER)){
           snapped = false;
           logo.classList.remove('logo-fixed-small');
-          document.body.classList.remove('logo-snapped');
-          document.body.style.removeProperty('--snap-gap-adjust');
+          if (grid) grid.style.marginTop = '';
           resetCache(); // re-measure large logo bottom next frame
         }
       }
