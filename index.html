@@ -157,6 +157,12 @@
       /* Raise About heading by 1" to increase space above white panel */
       #about > h2 { top: calc(-40px - 1in); }
     }
+    /* === Mobile portrait: move sections down 1" === */
+    @media (max-width: 600px) and (orientation: portrait){
+      /* Visually push sections down and adjust anchor landing */
+      #services{ margin-top: calc(60px + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
+      #about{ margin-top: calc(120px + 2.25in + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
+    }
   </style>
 </head>
 <body>
