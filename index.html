@@ -125,6 +125,7 @@
       /* 2-2-1 layout by flattening wrappers into a single 2-col grid */
       #services {
         display: grid !important;
+        grid-auto-flow: row dense;
         grid-template-columns: repeat(2, minmax(0,1fr)) !important;
         gap: 30px !important;
         max-width: min(900px, 100vw - 24px) !important;
@@ -140,13 +141,13 @@
 
       /* Flatten inner wrappers so all five cards flow into the 2-col grid */
       #services .service-grid,
-      #services .bottom-row { display: contents !important; }
+      #services .bottom-row { display: contents !important; margin-top: 0 !important; }
 
       /* Cards sizing */
       #services .service-box { width: 100% !important; }
 
       /* Last card centered, same width as a single column */
-      #services .service-box:last-of-type {
+      #services .bottom-row .service-box:last-child {
         grid-column: 1 / -1;
         justify-self: center;
         width: calc((100% - 30px) / 2) !important;
