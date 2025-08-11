@@ -155,16 +155,6 @@
       /* About section offset (unchanged) */
       #about { margin-top: calc(120px + 2.25in + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
     }
-      .service-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .bottom-row  { grid-template-columns: repeat(2, 1fr) !important; }
-      .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; }
-      .service-box { width: 100% !important; }
-
-      /* Move sections down by 1" visually and when using anchor links */
-      #services { margin-top: 60px; scroll-margin-top: calc(var(--nav-h) + 10px); }
-      #about    { margin-top: calc(120px + 2.25in + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
-    }
-
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       html { scroll-behavior: auto; }
@@ -541,4 +531,3 @@
   </script>
 </body>
 </html>
-
