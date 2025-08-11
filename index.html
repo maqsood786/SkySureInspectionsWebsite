@@ -50,7 +50,7 @@
     /* Sections */
     main { position: relative; z-index: 1; }
     #services { margin-block: 60px 200px; position: relative; scroll-margin-top: calc(var(--nav-h) + 10px); }
-    #services > h2 { color: var(--brand); position: absolute; top: -40px; left: 0.125in; margin: 0; }
+    #services > h2 { color: var(--accent); position: absolute; top: -40px; left: 0.125in; margin: 0; }
 
     /* Cards base */
     .service-grid, .bottom-row { max-width: min(1000px, calc(100vw - 24px)); margin: 0 auto; gap: 30px; }
@@ -63,7 +63,7 @@
 
     /* About */
     #about { margin-top: calc(120px + 2.25in); margin-bottom: 120px; position: relative; }
-    #about > h2 { color: var(--brand); position: absolute; top: -40px; left: 0.125in; margin: 0; }
+    #about > h2 { color: var(--accent); position: absolute; top: -40px; left: 0.125in; margin: 0; }
     #about .panel { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
 
     footer { background: var(--brand); color: #fff; padding: 24px 0; margin-top: 60px; text-align: center; }
@@ -149,6 +149,13 @@
       }
       #services .bottom-row { margin-top: 30px; }
       #services .service-box { width: 100% !important; }
+    }
+    /* Desktop anchor and about spacing adjustments */
+    @media (min-width: 1025px){
+      /* Services anchor lands 1" lower */
+      #services { scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
+      /* Raise About heading by 1" to increase space above white panel */
+      #about > h2 { top: calc(-40px - 1in); }
     }
   </style>
 </head>
