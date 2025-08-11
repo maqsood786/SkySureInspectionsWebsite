@@ -403,7 +403,7 @@
       });
     })();
 
-    // Snap logo just before service cards would touch the big logo (desktop + mobile) with hysteresis to prevent flicker
+    // Snap logo just before service cards would touch the big logo (desktop + mobile) with hysteresis
     (function(){
       const logo = document.getElementById('main-logo');
       const services = document.getElementById('services');
@@ -412,8 +412,10 @@
 
       let snapped = false;
       let lastLargeBottom = null; // measured when logo is large
-      const SNAP_IN_BUFFER = 8;   // snap when close
-      const SNAP_OUT_BUFFER = 40; // unsnap only after scrolling back further (hysteresis)
+      const SNAP_IN_BUFFER_DEFAULT = 8;   // px "just before"
+      const SNAP_OUT_BUFFER_DEFAULT = 40; // px hysteresis
+
+      const isMobilePortrait = () => window.matchMedia('(max-width: 600px) and (orientation: portrait)').matches;
 
       function measureLargeBottom(){
         if (snapped && lastLargeBottom != null) return lastLargeBottom;
@@ -427,8 +429,14 @@
         ticking = false;
         const gridTop = grid.getBoundingClientRect().top;
         const largeBottom = measureLargeBottom();
+        const SNAP_IN_BUFFER = SNAP_IN_BUFFER_DEFAULT;
+        const SNAP_OUT_BUFFER = SNAP_OUT_BUFFER_DEFAULT;
 
-        if (!snapped && gridTop <= (largeBottom + SNAP_IN_BUFFER)){
+        // On mobile portrait, do not snap immediately on load — require user to scroll a bit
+        const requireScrollForSnap = isMobilePortrait();
+        const hasScrolled = window.scrollY > 5; // tiny movement prevents instant snap on load
+
+        if (!snapped && gridTop <= (largeBottom + SNAP_IN_BUFFER) && (!requireScrollForSnap || hasScrolled)){
           snapped = true;
           logo.classList.add('logo-fixed-small');
         } else if (snapped && gridTop >= (largeBottom + SNAP_OUT_BUFFER)){
