@@ -415,42 +415,68 @@
       });
     })();
 
-    // Snap logo just before service cards would touch the big logo (desktop + mobile) with hysteresis
+    // Snap logo just before service cards would touch the big logo (desktop + mobile) with hysteresis + direction gating
     (function(){
       const logo = document.getElementById('main-logo');
       const services = document.getElementById('services');
-      const firstCard = services ? services.querySelector('.service-box') : null; // more precise than container top
+      const firstCard = services ? services.querySelector('.service-box') : null; // precise trigger
       if (!logo || !services || !firstCard) return;
 
+      // State
       let snapped = false;
-      const SNAP_IN_BUFFER_DEFAULT = 8;   // px "just before"
-      const SNAP_OUT_BUFFER_DEFAULT = 40; // px hysteresis
+      let largeBottomRef = null;      // cached bottom of the LARGE logo (stable threshold)
+      let lastY = window.scrollY;     // scroll direction tracker
+      let lastDir = 0;                // +down / -up
+      let userScrolled = window.scrollY > 5; // prevent immediate snap on load in mobile portrait
 
+      // Tunables
+      const SNAP_IN_BUFFER_DEFAULT  = 8;   // px "just before"
+      const SNAP_OUT_BUFFER_DEFAULT = 40;  // px hysteresis (scrolling back up)
       const isMobilePortrait  = () => window.matchMedia('(max-width: 600px) and (orientation: portrait)').matches;
       const isMobileLandscape = () => window.matchMedia('(orientation: landscape) and (max-width: 915px)').matches;
 
-      function update(){
-        const cardTop   = firstCard.getBoundingClientRect().top;
-        const logoBottom = logo.getBoundingClientRect().bottom; // measure fresh every frame to avoid stale cache
-        const SNAP_IN_BUFFER  = isMobileLandscape() ? 12 : SNAP_IN_BUFFER_DEFAULT; // 1/8" on mobile landscape
-        const SNAP_OUT_BUFFER = SNAP_OUT_BUFFER_DEFAULT;
-
-        // On mobile portrait, avoid snapping on load until the user has scrolled a bit
-        const requireScrollForSnap = isMobilePortrait();
-        const hasScrolled = window.scrollY > 5;
-
-        if (!snapped && cardTop <= (logoBottom + SNAP_IN_BUFFER) && (!requireScrollForSnap || hasScrolled)){
-          snapped = true;
-          logo.classList.add('logo-fixed-small');
-        } else if (snapped && cardTop >= (logoBottom + SNAP_OUT_BUFFER)){
-          snapped = false;
-          logo.classList.remove('logo-fixed-small');
+      function ensureLargeBottom(){
+        if (largeBottomRef == null && !snapped){
+          largeBottomRef = logo.getBoundingClientRect().bottom;
         }
       }
 
-      // rAF throttle for smoothness
+      function resetCache(){ largeBottomRef = null; }
+
+      function update(){
+        ensureLargeBottom();
+        const cardTop = firstCard.getBoundingClientRect().top;
+        const largeBottom = largeBottomRef ?? logo.getBoundingClientRect().bottom; // fallback
+        const SNAP_IN_BUFFER  = isMobileLandscape() ? 12 : SNAP_IN_BUFFER_DEFAULT; // 1/8" in mobile landscape
+        const SNAP_OUT_BUFFER = SNAP_OUT_BUFFER_DEFAULT;
+
+        const scrollingDown = lastDir > 0.5;
+        const scrollingUp   = lastDir < -0.5;
+
+        const requireScrollForSnap = isMobilePortrait();
+        const allowSnap = !requireScrollForSnap || userScrolled;
+
+        // Snap only while scrolling DOWN and crossing the IN threshold
+        if (!snapped && allowSnap && scrollingDown && cardTop <= (largeBottom + SNAP_IN_BUFFER)){
+          snapped = true;
+          logo.classList.add('logo-fixed-small');
+          // keep largeBottomRef (measured pre-snap) as the stable reference
+        }
+        // Unsnap only while scrolling UP and crossing the OUT threshold (uses the SAME large threshold)
+        else if (snapped && scrollingUp && cardTop >= (largeBottom + SNAP_OUT_BUFFER)){
+          snapped = false;
+          logo.classList.remove('logo-fixed-small');
+          resetCache(); // re-measure large logo bottom next frame
+        }
+      }
+
+      // rAF throttle
       let ticking = false;
       function onScrollOrResize(){
+        const y = window.scrollY;
+        lastDir = y - lastY;
+        lastY = y;
+        if (y > 5) userScrolled = true;
         if (!ticking){
           ticking = true;
           requestAnimationFrame(()=>{ ticking = false; update(); });
@@ -458,10 +484,10 @@
       }
 
       window.addEventListener('scroll', onScrollOrResize, { passive: true });
-      window.addEventListener('resize', onScrollOrResize);
-      window.addEventListener('load', update);
-      // Run once at start in case we reload mid-page
-      document.addEventListener('DOMContentLoaded', update);
+      window.addEventListener('resize', ()=>{ resetCache(); onScrollOrResize(); });
+      window.addEventListener('orientationchange', ()=>{ resetCache(); onScrollOrResize(); });
+      window.addEventListener('load', ()=>{ resetCache(); update(); });
+      document.addEventListener('DOMContentLoaded', ()=>{ resetCache(); update(); });
     })();
   </script>
 </body>
