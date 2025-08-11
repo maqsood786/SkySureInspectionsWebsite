@@ -121,13 +121,47 @@
     @media (orientation: landscape) and (max-width: 915px){
       /* Raise snapped logo to 1/4" below the top task bar */
       .logo-fixed-small { top: calc(var(--nav-h) + 0.25in) !important; right: 12px; }
+
+      /* 2-2-1 layout by flattening wrappers into a single 2-col grid */
+      #services {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+        gap: 30px !important;
+        max-width: min(900px, 100vw - 24px) !important;
+        margin: 0 auto !important;
+        align-items: stretch;
+        padding-top: var(--snap-gap-adjust, 0); /* maintain 1/8" gap under snapped logo */
+        /* Section offset as requested earlier */
+        scroll-margin-top: calc(var(--nav-h) + 10px);
+        margin-top: 60px;
+      }
+      /* Make heading occupy its own row so cards align 2-2-1 */
+      #services > h2 { position: static !important; grid-column: 1 / -1; margin: 0 0 12px 0.125in; }
+
+      /* Flatten inner wrappers so all five cards flow into the 2-col grid */
+      #services .service-grid,
+      #services .bottom-row { display: contents !important; }
+
+      /* Cards sizing */
+      #services .service-box { width: 100% !important; }
+
+      /* Last card centered, same width as a single column */
+      #services .service-box:last-of-type {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc((100% - 30px) / 2) !important;
+      }
+
+      /* About section offset (unchanged) */
+      #about { margin-top: calc(120px + 2.25in + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
+    }
       .service-grid { grid-template-columns: repeat(2, 1fr) !important; }
       .bottom-row  { grid-template-columns: repeat(2, 1fr) !important; }
       .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; }
       .service-box { width: 100% !important; }
 
       /* Move sections down by 1" visually and when using anchor links */
-      #services { margin-top: calc(60px + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
+      #services { margin-top: 60px; scroll-margin-top: calc(var(--nav-h) + 10px); }
       #about    { margin-top: calc(120px + 2.25in + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
     }
 
@@ -469,10 +503,10 @@
               const cardTop = firstCard.getBoundingClientRect().top;
               const targetGap = 12; // 1/8" in CSS px
               const delta = Math.max(0, (snappedBottom + targetGap) - cardTop);
-              grid.style.marginTop = delta + 'px';
+              services.style.setProperty('--snap-gap-adjust', delta + 'px');
             }));
           } else {
-            grid.style.marginTop = '';
+            services.style.removeProperty('--snap-gap-adjust');
           }
           // keep largeBottomRef (measured pre-snap) as the stable reference
         }
@@ -480,7 +514,7 @@
         else if (snapped && scrollingUp && cardTop >= (largeBottom + SNAP_OUT_BUFFER)){
           snapped = false;
           logo.classList.remove('logo-fixed-small');
-          if (grid) grid.style.marginTop = '';
+          if (services) services.style.removeProperty('--snap-gap-adjust');
           resetCache(); // re-measure large logo bottom next frame
         }
       }
@@ -507,3 +541,4 @@
   </script>
 </body>
 </html>
+
