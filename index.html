@@ -49,16 +49,67 @@
 
     /* Sections */
     main { position: relative; z-index: 1; }
-    $1padding-bottom: 1in; margin-bottom: 0;
+
+    /* Sections (base) */
+    #services { margin-block: 60px 200px; position: relative; scroll-margin-top: calc(var(--nav-h) + 10px); }
+    #services > h2 { color: var(--accent); position: absolute; top: -40px; left: 0.125in; margin: 0; }
+
+    /* Cards base */
+    .service-grid, .bottom-row { max-width: min(1000px, calc(100vw - 24px)); margin: 0 auto; gap: 30px; }
+    .service-grid { display: grid; }
+    .bottom-row { display: grid; margin-top: 30px; }
+    .service-box { background-color: #ffffffcc; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden; }
+    .service-box h3 { margin: 0 0 8px; color: var(--brand); }
+    .service-box p { margin: 8px 0; }
+    .service-box p:last-child { margin-top: auto; font-weight: 700; }
+
+    /* About (base) */
+    #about { margin-top: calc(120px + 2.25in); margin-bottom: 120px; position: relative; }
+    #about > h2 { color: var(--accent); position: absolute; top: -40px; left: 0.125in; margin: 0; }
+    #about .panel { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+
+    /* Footer (base) */
+    footer { background: var(--brand); color: #fff; padding: 24px 0; margin-top: 60px; text-align: center; }
+    footer p { margin: 6px 0; }
+
+    /* Modal & form styling (restored) */
+    body.modal-open { overflow: hidden; }
+    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 10000; }
+    #appointment-form { position: fixed; left: 50%; top: calc(var(--nav-h) + 24px); --form-scale: 0.85; transform: translateX(-50%) scale(var(--form-scale)); transform-origin: top center; background: #fff; padding: 20px; border-radius: 12px; box-shadow: var(--shadow); z-index: 10001; width: min(560px, calc(100vw - 32px)); max-height: 80vh; overflow: auto; }
+    #appointment-form .close-btn { position: absolute; top: 10px; right: 10px; background: none; border: 0; font-size: 1.5rem; cursor: pointer; }
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { display:block; font-weight:700; margin-bottom:6px; }
+    .field input, .field select, .field textarea { width:100%; padding:10px 12px; border:1px solid #cdd6df; border-radius:10px; font: inherit; }
+    #submit-btn { background: var(--accent); color:#fff; border:0; border-radius:999px; padding:12px 20px; font-weight:800; cursor:pointer; box-shadow: var(--shadow); display:block; width:66%; min-width:240px; margin: 8px auto 0; }
+
+    /* === Mobile landscape (≤915px): layout + spacing === */
+    @media (orientation: landscape) and (max-width: 915px){
+      /* Snapped logo position */
+      .logo-fixed-small { top: calc(var(--nav-h) + 0.25in) !important; right: 12px; }
+
+      /* Services: 2-2-1 layout in a single 2-col grid */
+      #services {
+        display: grid !important;
+        grid-auto-flow: row dense;
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+        gap: 30px !important;
+        max-width: min(900px, 100vw - 24px) !important;
+        margin: 0 auto !important;
+        align-items: stretch;
+        padding-top: var(--snap-gap-adjust, 0); /* ~1/8" gap under snapped logo */
+        scroll-margin-top: calc(var(--nav-h) + 10px);
+        margin-top: calc(60px - 0.5in); /* raised by 1/2" */
+        margin-bottom: 1in; /* 1" gap to About */
       }
-      /* Make heading occupy its own row so cards align 2-2-1 */
+      /* Heading occupies its own row */
       #services > h2 { position: static !important; grid-column: 1 / -1; margin: 0 0 12px 0.125in; }
 
-      /* Flatten inner wrappers so all five cards flow into the 2-col grid */
+      /* Flatten wrappers so 5 cards flow into the 2-col grid */
       #services .service-grid,
       #services .bottom-row { display: contents !important; margin-top: 0 !important; }
 
-      /* Cards sizing */
+      /* Card sizing */
       #services .service-box { width: 100% !important; }
 
       /* Last card centered, same width as a single column */
@@ -68,10 +119,11 @@
         width: calc((100% - 30px) / 2) !important;
       }
 
-      /* About section offset (unchanged) */
-      #about { margin-top: 0; scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
+      /* About starts immediately after the 1" gap */
+      #about { margin-top: 0; }
       #about > h2 { position: static !important; margin: 0 0 12px 0.125in; }
     }
+
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       html { scroll-behavior: auto; }
