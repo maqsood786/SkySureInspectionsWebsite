@@ -69,7 +69,16 @@
     footer { background: var(--brand); color: #fff; padding: 24px 0; margin-top: 60px; text-align: center; }
     footer p { margin: 6px 0; }
 
-    $1#submit-btn { background: var(--accent); color:#fff; border:0; border-radius:999px; padding:12px 20px; font-weight:800; cursor:pointer; box-shadow: var(--shadow); display:block; width:66%; min-width:240px; margin: 8px auto 0; }
+    /* Modal & form styling */
+    body.modal-open { overflow: hidden; }
+    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 10000; }
+    #appointment-form { position: fixed; left: 50%; top: calc(var(--nav-h) + 24px); --form-scale: 0.85; transform: translateX(-50%) scale(var(--form-scale)); transform-origin: top center; background: #fff; padding: 20px; border-radius: 12px; box-shadow: var(--shadow); z-index: 10001; width: min(560px, calc(100vw - 32px)); max-height: 80vh; overflow: auto; }
+    #appointment-form .close-btn { position: absolute; top: 10px; right: 10px; background: none; border: 0; font-size: 1.5rem; cursor: pointer; }
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { display:block; font-weight:700; margin-bottom:6px; }
+    .field input, .field select, .field textarea { width:100%; padding:10px 12px; border:1px solid #cdd6df; border-radius:10px; font: inherit; }
+    #submit-btn { background: var(--accent); color:#fff; border:0; border-radius:999px; padding:12px 20px; font-weight:800; cursor:pointer; box-shadow: var(--shadow); display:block; width:66%; min-width:240px; margin: 8px auto 0; }
 
     /* Ensure header/logo are non-interactive while modal is open */
     .modal-open #top,
