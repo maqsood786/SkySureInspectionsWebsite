@@ -130,7 +130,22 @@
 
     /* Mobile landscape equalize widths */
     @media (orientation: landscape) and (max-width: 915px){
+      /* Base landscape rules */
       .service-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .bottom-row  { grid-template-columns: repeat(2, 1fr) !important; }
+      .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; }
+      .service-box { width: 100% !important; }
+
+      /* --- Requested layout: 2-2-1 with last centered --- */
+      /* Flatten the two inner grids so all five cards flow in one 2-col grid */
+      #services { display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 30px !important; max-width: min(900px, 100vw - 24px) !important; margin: 0 auto !important; align-items: stretch; }
+      #services .service-grid, #services .bottom-row { display: contents !important; }
+      /* Center the last card on its own row */
+      #services .bottom-row .service-box:last-child { grid-column: 1 / -1; justify-self: center; width: min(420px, 100%) !important; }
+
+      /* Lower About section by 1" when using the top nav anchor */
+      #about{ scroll-margin-top: calc(var(--nav-h) + 10px + 1in) !important; }
+    }
       .bottom-row  { grid-template-columns: repeat(2, 1fr) !important; }
       .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; }
       .service-box { width: 100% !important; }
@@ -158,10 +173,6 @@
 
       /* 3) Lower About by 1" when using the top nav anchor */
       #about{ scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
-    }
-
-      /* 2) Nudge Services section down by 1/2" and keep anchor scroll comfortable */
-      #services{ margin-top: calc(60px + 0.5in); scroll-margin-top: calc(var(--nav-h) + 10px + 0.5in); }
     }
   </style>
 </head>
