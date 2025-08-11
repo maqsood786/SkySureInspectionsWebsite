@@ -66,7 +66,7 @@
     #about > h2 { color: var(--accent); position: absolute; top: -40px; left: 0.125in; margin: 0; }
     #about .panel { background: var(--bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
 
-    footer { background: var(--brand); color: #fff; padding: 24px 0; margin-top: 60px; text-align: center; }
+    footer { background: var(--brand); color: #fff; padding: 24px 0; margin-top: calc(60px - 0.5in); text-align: center; }
     footer p { margin: 6px 0; }
 
     /* Modal & form styling (restored) */
@@ -135,6 +135,7 @@
         /* Section offset as requested earlier */
         scroll-margin-top: calc(var(--nav-h) + 10px);
         margin-top: 60px;
+        margin-bottom: 0.5in;
       }
       /* Make heading occupy its own row so cards align 2-2-1 */
       #services > h2 { position: static !important; grid-column: 1 / -1; margin: 0 0 12px 0.125in; }
@@ -154,7 +155,7 @@
       }
 
       /* About section offset (unchanged) */
-      #about { margin-top: calc(120px + 2.25in + 1in); scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
+      #about { margin-top: 0; scroll-margin-top: calc(var(--nav-h) + 10px + 1in); }
     }
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
