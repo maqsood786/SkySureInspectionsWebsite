@@ -130,8 +130,36 @@
 
     /* Mobile landscape equalize widths */
     @media (orientation: landscape) and (max-width: 915px){
-      /* Base landscape rules */
-      .service-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      /* Base landscape grid */
+      #services { 
+        display: grid !important; 
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important; 
+        --lg-gap: 30px; 
+        gap: var(--lg-gap) !important; 
+        max-width: min(900px, 100vw - 24px) !important; 
+        margin: 0 auto !important; 
+        align-items: stretch; 
+      }
+      /* Make the heading occupy a full row so cards align 2-2-1 */
+      #services > h2 { grid-column: 1 / -1; }
+
+      /* Flatten inner wrappers so all five cards flow into the 2-col grid */
+      #services .service-grid, 
+      #services .bottom-row { display: contents !important; }
+
+      /* Cards sizing inside cells */
+      .service-box { width: 100% !important; }
+
+      /* Last card: centered, same width as a single column */
+      #services .service-box:last-of-type { 
+        grid-column: 1 / -1; 
+        justify-self: center; 
+        width: calc((100% - var(--lg-gap))/2) !important; 
+      }
+
+      /* Lower About section by 1" when using the top nav anchor */
+      #about{ scroll-margin-top: calc(var(--nav-h) + 10px + 1in) !important; }
+    }
       .bottom-row  { grid-template-columns: repeat(2, 1fr) !important; }
       .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; }
       .service-box { width: 100% !important; }
@@ -145,11 +173,7 @@
 
       /* Lower About section by 1" when using the top nav anchor */
       #about{ scroll-margin-top: calc(var(--nav-h) + 10px + 1in) !important; }
-    }
-      .bottom-row  { grid-template-columns: repeat(2, 1fr) !important; }
-      .service-grid, .bottom-row { max-width: min(900px, 100vw - 24px) !important; }
-      .service-box { width: 100% !important; }
-    }
+    
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
